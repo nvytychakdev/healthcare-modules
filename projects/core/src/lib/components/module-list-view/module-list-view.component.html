@@ -1,0 +1,18 @@
+<div class="flex items-center gap-1">
+  @if (module && data) {
+    @if (data[module.moduleId]?.value; as value) {
+      <div class="bg-primary inline-flex items-center justify-center gap-2 rounded-sm px-4 py-2">
+        <span>{{ value }}</span>
+
+        @switch (data[module.moduleId]?.direction) {
+          @case ('INCREASE') {
+            <ng-icon class="text-white" name="matArrowUpwardOutline" />
+          }
+          @case ('DECREASE') {
+            <ng-icon class="text-white" name="matArrowDownwardOutline" />
+          }
+        }
+      </div>
+    }
+  }
+</div>
