@@ -1,0 +1,4 @@
+@import "./theme.css";
+
+/* components */
+@import "./components/table.css";
