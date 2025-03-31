@@ -1,4 +1,11 @@
-import { ModuleConfig, ModuleFactory, ModuleView } from '@healthcare/core';
+import {
+  createResolverProvider,
+  Module,
+  ModuleConfig,
+  ModuleFactory,
+  ModuleResolver,
+  ModuleView,
+} from '@healthcare/core';
 import { TemperatureListViewComponent } from './temperature-list-view/temperature-list-view.component';
 import { TemperatureOverviewComponent } from './temperature-overview/temperature-overview.component';
 import { TemperatureDataSource } from './temperature.data-source';
@@ -17,3 +24,15 @@ export const createTemperatureModule = (moduleConfig: ModuleConfig) => {
     moduleView: view,
   });
 };
+
+class TemperatureModuleResolver implements ModuleResolver {
+  canResolve(config: ModuleConfig): boolean {
+    return config.moduleId === 'Temperature';
+  }
+
+  resolve(moduleConfig: ModuleConfig): Module {
+    return createTemperatureModule(moduleConfig);
+  }
+}
+
+export const provideTemperatureModule = () => createResolverProvider(TemperatureModuleResolver);

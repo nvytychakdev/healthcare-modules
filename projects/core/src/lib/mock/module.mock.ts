@@ -14,7 +14,6 @@ export const MODULES_MOCK: ModuleConfig[] = [
   {
     id: '2',
     moduleId: 'Weight',
-    moduleName: 'Weight',
     createDateTime: new Date().toISOString(),
     updateDateTime: new Date().toISOString(),
     order: 2,

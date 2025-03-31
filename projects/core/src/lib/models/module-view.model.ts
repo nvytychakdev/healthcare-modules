@@ -28,10 +28,12 @@ export class ModuleView {
     this._listView = component;
     return this;
   }
+
   withOverviewComponent(component: Type<unknown>) {
     this._overview = component;
     return this;
   }
+
   withDetailViewComponent(component: Type<unknown>) {
     this._detailView = component;
     return this;

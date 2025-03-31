@@ -8,6 +8,7 @@ export * from './lib/components/module-shared/module-direction/module-direction.
 
 export * from './lib/interfaces/module-config.interface';
 export * from './lib/interfaces/module-primitive.interface';
+export * from './lib/interfaces/module-resolver.interface';
 
 export * from './lib/models/module-data-source.model';
 export * from './lib/models/module-factory.model';
@@ -19,3 +20,5 @@ export * from './lib/models/module.model';
 
 export * from './lib/services/module-data.service';
 export * from './lib/services/module-registry.service';
+
+export * from './lib/utils/create-resolver-provider.util';
