@@ -1,0 +1,30 @@
+<div
+  class="bg-surface-100 inline-flex h-full w-full flex-col items-start justify-center rounded p-4"
+>
+  @if (module.dataSource.isLoading()) {
+    <div class="flex w-full flex-1 items-center justify-center">Loading...</div>
+  } @else {
+    <div class="border-surface-300 rounded-full border px-4 py-2">
+      {{ module.moduleName }}
+    </div>
+
+    @if (latestRecord()) {
+      <div class="flex w-full flex-1 items-center justify-center text-gray-500">
+        Placeholder for chart
+      </div>
+      <div class="flex w-full items-end justify-between">
+        <div class="flex items-end gap-2">
+          <span class="text-4xl">{{ latestRecordValue() }}</span>
+          <span>
+            <lib-module-direction [direction]="latestRecordDirection()" />
+          </span>
+        </div>
+        <div>
+          {{ latestRecordDate() | date }}
+        </div>
+      </div>
+    } @else {
+      <div class="flex w-full flex-1 items-center justify-center text-gray-500">No data...</div>
+    }
+  }
+</div>

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Type } from '@angular/core';
-import { ModuleDetailsComponent, ModuleRenderer } from '@healthcare/core';
+import { ModuleRenderer } from '@healthcare/core';
 
 @Component({
   selector: 'app-patient-details-module',
@@ -10,6 +10,6 @@ import { ModuleDetailsComponent, ModuleRenderer } from '@healthcare/core';
 })
 export class PatientDetailsModuleComponent extends ModuleRenderer {
   override getRenderComponent(): Type<unknown> {
-    return ModuleDetailsComponent;
+    return this.module().view.detailView;
   }
 }

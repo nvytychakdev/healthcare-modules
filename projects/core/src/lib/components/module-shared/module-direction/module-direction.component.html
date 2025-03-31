@@ -1,0 +1,11 @@
+<span class="align-bottom text-2xl/6">
+  @switch (direction()) {
+    @case ('INCREASE') {
+      <ng-icon class="text-white" name="matArrowUpwardOutline" />
+    }
+    @case ('DECREASE') {
+      <ng-icon class="text-white" name="matArrowDownwardOutline" />
+    }
+    @default {}
+  }
+</span>

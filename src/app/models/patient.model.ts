@@ -1,3 +1,8 @@
+import {
+  MODULE_DATA_TEMPERATURE_MOCK,
+  MODULE_DATA_WEIGHT_MOCK,
+} from '../../../projects/core/src/lib/mock/module-data.mock';
+
 export type PatientData = {
   value: number | string;
   direction?: 'INCREASE' | 'DECREASE';
@@ -16,10 +21,7 @@ export const PATIENTS: Patient[] = [
     firstName: 'Test',
     lastName: 'Test',
     data: {
-      ['Temperature']: {
-        value: 37,
-        direction: 'INCREASE',
-      },
+      ['Temperature']: MODULE_DATA_TEMPERATURE_MOCK.at(-1),
     },
   },
   {
@@ -27,10 +29,7 @@ export const PATIENTS: Patient[] = [
     firstName: 'Test',
     lastName: 'Test',
     data: {
-      ['Temperature']: {
-        value: 39.5,
-        direction: 'INCREASE',
-      },
+      ['Temperature']: MODULE_DATA_TEMPERATURE_MOCK.at(-1),
     },
   },
   {
@@ -38,9 +37,7 @@ export const PATIENTS: Patient[] = [
     firstName: 'Test',
     lastName: 'Test',
     data: {
-      ['Weight']: {
-        value: 80,
-      },
+      ['Weight']: MODULE_DATA_WEIGHT_MOCK.at(-1),
     },
   },
   {
@@ -48,13 +45,8 @@ export const PATIENTS: Patient[] = [
     firstName: 'Test',
     lastName: 'Test',
     data: {
-      ['Temperature']: {
-        value: 36.6,
-      },
-      ['Weight']: {
-        value: 73,
-        direction: 'DECREASE',
-      },
+      ['Temperature']: MODULE_DATA_TEMPERATURE_MOCK.at(-1),
+      ['Weight']: MODULE_DATA_WEIGHT_MOCK.at(-1),
     },
   },
 ];

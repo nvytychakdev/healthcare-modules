@@ -2,5 +2,5 @@
  * Public API Surface of modules
  */
 
-export * from './lib/modules.service';
-export * from './lib/modules.component';
+export * from './lib/temperature/temperature.entry';
+export * from './lib/weight/weight.entry';

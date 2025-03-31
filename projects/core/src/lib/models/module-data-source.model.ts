@@ -1,9 +1,7 @@
-import { inject, InjectionToken, signal } from '@angular/core';
+import { inject, signal } from '@angular/core';
 import { finalize, map } from 'rxjs';
-import { Patient } from '../../../../../src/app/models/patient.model';
+import { ModulePrimitive } from '../interfaces/module-primitive.interface';
 import { ModuleDataService } from '../services/module-data.service';
-
-export const MODULE_DATA = new InjectionToken<Patient['data']>('MODULE_DATA');
 
 export class ModuleDataSource {
   private readonly moduleData = inject(ModuleDataService);
@@ -14,16 +12,18 @@ export class ModuleDataSource {
     return this._isLoading.asReadonly();
   }
 
-  fetchData(id: string) {
+  fetchData(patientId: string, moduleId: string) {
     this._isLoading.set(true);
-    return this.moduleData.getModuleData(id).pipe(finalize(() => this._isLoading.set(false)));
+    return this.moduleData
+      .getModuleData(patientId, moduleId)
+      .pipe(finalize(() => this._isLoading.set(false)));
   }
 
-  formatData(data: unknown[]) {
+  formatData(data: ModulePrimitive[]) {
     return data;
   }
 
-  getData(id: string) {
-    return this.fetchData(id).pipe(map((data) => this.formatData(data)));
+  getData(patientId: string, moduleId: string) {
+    return this.fetchData(patientId, moduleId).pipe(map((data) => this.formatData(data)));
   }
 }

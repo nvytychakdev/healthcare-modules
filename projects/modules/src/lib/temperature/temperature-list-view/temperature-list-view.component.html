@@ -1,0 +1,10 @@
+<div class="flex items-center gap-1">
+  @if (module && data) {
+    @if (data[module.moduleId]; as moduleData) {
+      <div class="bg-rag-green inline-flex items-center justify-center gap-2 rounded-sm px-4 py-2">
+        <span>{{ moduleData.value }}</span>
+        <lib-module-direction [direction]="moduleData.direction" />
+      </div>
+    }
+  }
+</div>

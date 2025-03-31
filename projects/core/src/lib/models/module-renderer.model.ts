@@ -10,6 +10,7 @@ import {
   viewChild,
   ViewContainerRef,
 } from '@angular/core';
+import { MODULE } from './module-inject.model';
 import { Module } from './module.model';
 
 /**
@@ -24,15 +25,14 @@ export abstract class ModuleRenderer {
 
   constructor() {
     effect(() => {
-      const module = this.module();
-      const injector = this.createInjector(module);
+      const injector = this.createInjector(this.module());
       const component = this.getRenderComponent();
       this.container()?.createComponent(component, { injector });
     });
   }
 
   private createInjector(module: Module) {
-    const staticProviders = [{ provide: Module, useValue: module }];
+    const staticProviders = [{ provide: MODULE, useValue: module }];
     const customProviders = this.createProviders();
 
     return Injector.create({

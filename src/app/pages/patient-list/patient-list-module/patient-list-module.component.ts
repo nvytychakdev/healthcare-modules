@@ -7,7 +7,6 @@ import {
   Type,
 } from '@angular/core';
 import { MODULE_DATA } from '@healthcare/core';
-import { ModuleListViewComponent } from '../../../../../projects/core/src/lib/components/module-list-view/module-list-view.component';
 import { ModuleRenderer } from '../../../../../projects/core/src/lib/models/module-renderer.model';
 import { Patient } from '../../../models/patient.model';
 
@@ -22,7 +21,7 @@ export class PatientListModuleComponent extends ModuleRenderer {
   readonly data = input.required<Patient['data']>();
 
   override getRenderComponent(): Type<unknown> {
-    return ModuleListViewComponent;
+    return this.module().view.listView;
   }
 
   override createProviders(): Array<Provider | StaticProvider> {
