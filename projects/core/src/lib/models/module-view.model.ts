@@ -4,11 +4,14 @@ import {
   ModuleListViewComponent,
   ModuleOverviewCardComponent,
 } from '../../public-api';
+import { ModuleChartContext } from '../enums/module-chart-type.enum';
+import { ModuleChartRenderer } from '../interfaces/module-chart-renderer.interface';
 
 export class ModuleView {
   private _listView: Type<unknown> = ModuleListViewComponent;
   private _overview: Type<unknown> = ModuleOverviewCardComponent;
   private _detailView: Type<unknown> = ModuleDetailsComponent;
+  private _chartRenderers: Map<ModuleChartContext, ModuleChartRenderer> = new Map();
 
   get listView() {
     return this._listView;
@@ -24,6 +27,10 @@ export class ModuleView {
 
   constructor() {}
 
+  getChartRenderers(context: ModuleChartContext) {
+    return this._chartRenderers.get(context);
+  }
+
   withListViewComponent(component: Type<unknown>) {
     this._listView = component;
     return this;
@@ -36,6 +43,11 @@ export class ModuleView {
 
   withDetailViewComponent(component: Type<unknown>) {
     this._detailView = component;
+    return this;
+  }
+
+  withChartRenderer(context: ModuleChartContext, renderer: ModuleChartRenderer) {
+    this._chartRenderers.set(context, renderer);
     return this;
   }
 }

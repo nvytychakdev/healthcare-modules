@@ -1,8 +1,10 @@
 import {
   createResolverProvider,
   Module,
+  ModuleChartContext,
   ModuleConfig,
   ModuleFactory,
+  ModuleLineChartRenderer,
   ModuleResolver,
   ModuleView,
 } from '@healthcare/core';
@@ -16,7 +18,9 @@ export const createTemperatureModule = (moduleConfig: ModuleConfig) => {
   const dataSource = new TemperatureDataSource();
   const view = new ModuleView()
     .withListViewComponent(TemperatureListViewComponent)
-    .withOverviewComponent(TemperatureOverviewComponent);
+    .withOverviewComponent(TemperatureOverviewComponent)
+    .withChartRenderer(ModuleChartContext.Overview, new ModuleLineChartRenderer())
+    .withChartRenderer(ModuleChartContext.Details, new ModuleLineChartRenderer());
 
   return ModuleFactory.createModule(moduleConfig, {
     moduleDataSource: dataSource,
