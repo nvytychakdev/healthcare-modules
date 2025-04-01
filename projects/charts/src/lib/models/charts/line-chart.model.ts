@@ -6,6 +6,7 @@ import { DateAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/DateAxis'
 import { ValueAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/ValueAxis';
 import { LineSeries } from '@amcharts/amcharts5/.internal/charts/xy/series/LineSeries';
 import { XYChart } from '@amcharts/amcharts5/.internal/charts/xy/XYChart';
+import { XYCursor } from '@amcharts/amcharts5/.internal/charts/xy/XYCursor';
 import AnimatedTheme from '@amcharts/amcharts5/themes/Animated';
 import DarkTheme from '@amcharts/amcharts5/themes/Dark';
 import { ChartRender } from '../../interfaces/chart-render.interface';
@@ -22,6 +23,7 @@ export class LineChart extends BaseChart {
     const xAxis = this.createXAxis(root, chart);
     const yAxis = this.createYAxis(root, chart);
     const series = this.createSeries(root, chart, xAxis, yAxis);
+    const cursor = this.configureCursor(root, chart);
 
     series.appear(1000);
     chart.appear(1000, 100);
@@ -86,6 +88,13 @@ export class LineChart extends BaseChart {
       dateFormat: 'i',
       dateFields: [this.fields.valueXField],
     });
+  }
+
+  private configureCursor(root: Root, chart: XYChart) {
+    const cursor = chart.set('cursor', XYCursor.new(root, {}));
+    cursor.lineY.set('visible', false);
+    cursor.lineX.set('visible', false);
+    return cursor;
   }
 
   private addBullets(root: Root, series: LineSeries): void {
