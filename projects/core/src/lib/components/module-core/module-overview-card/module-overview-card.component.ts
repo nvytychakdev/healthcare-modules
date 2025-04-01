@@ -1,5 +1,12 @@
 import { DatePipe } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  computed,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseChart, ChartComponent } from '@healthcare/charts';
 import { v4 as uuidv4 } from 'uuid';
@@ -15,7 +22,7 @@ import { ModuleDirectionComponent } from '../../module-shared/module-direction/m
   styleUrl: './module-overview-card.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ModuleOverviewCardComponent {
+export class ModuleOverviewCardComponent implements OnInit {
   readonly viewType = ModuleChartContext.Overview;
 
   private readonly route = inject(ActivatedRoute);
