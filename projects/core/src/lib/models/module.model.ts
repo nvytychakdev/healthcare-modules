@@ -1,4 +1,6 @@
+import { ModuleChartContext } from '../enums/module-chart-type.enum';
 import { ModuleConfig } from '../interfaces/module-config.interface';
+import { ModuleLineChartRenderer } from './module-chart/module-line-chart-renderer.model';
 import { ModuleDataSource } from './module-data-source.model';
 import { ModuleSettings } from './module-settings.model';
 import { ModuleView } from './module-view.model';
@@ -37,7 +39,9 @@ export class Module {
     this._config = moduleConfig;
     this._settings = new ModuleSettings();
     this._dataSource = new ModuleDataSource();
-    this._view = new ModuleView();
+    this._view = new ModuleView()
+      .withChartRenderer(ModuleChartContext.Details, new ModuleLineChartRenderer())
+      .withChartRenderer(ModuleChartContext.Overview, new ModuleLineChartRenderer());
   }
 
   withModuleSettings(moduleSettings: ModuleSettings) {

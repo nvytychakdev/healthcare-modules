@@ -10,17 +10,21 @@
 
     @if (latestRecord()) {
       <div class="flex w-full flex-1 items-center justify-center text-gray-500">
-        Placeholder for chart
+        @if (chart(); as chart) {
+          @if (data(); as data) {
+            <lib-chart class="min-h-48" [chart]="chart" [data]="data" />
+          }
+        }
       </div>
       <div class="flex w-full items-end justify-between">
         <div class="flex items-end gap-2">
-          <span class="text-4xl">{{ latestRecordValue() }}</span>
+          <span class="text-4xl">{{ latestRecord()?.value }}</span>
           <span>
-            <lib-module-direction [direction]="latestRecordDirection()" />
+            <lib-module-direction [direction]="latestRecord()?.direction" />
           </span>
         </div>
         <div>
-          {{ latestRecordDate() | date }}
+          {{ latestRecord()?.createDateTime | date }}
         </div>
       </div>
     } @else {

@@ -1,6 +1,6 @@
 export interface ModulePrimitive {
   id: string;
-  craeteDateTime: string;
+  createDateTime: string;
   updateDateTime: string;
   moduleId: string;
   moduleConfigId: string;
