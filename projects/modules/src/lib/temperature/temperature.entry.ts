@@ -16,11 +16,18 @@ import { TemperatureSettings } from './temperature.settings';
 export const createTemperatureModule = (moduleConfig: ModuleConfig) => {
   const settings = new TemperatureSettings();
   const dataSource = new TemperatureDataSource();
+
+  // customized keys for temperatre chart only
+  const renderer = new ModuleLineChartRenderer().withFields({
+    valueYField: 'value',
+    valueXField: 'createDateTime',
+  });
+
   const view = new ModuleView()
     .withListViewComponent(TemperatureListViewComponent)
     .withOverviewComponent(TemperatureOverviewComponent)
-    .withChartRenderer(ModuleChartContext.Overview, new ModuleLineChartRenderer())
-    .withChartRenderer(ModuleChartContext.Details, new ModuleLineChartRenderer());
+    .withChartRenderer(ModuleChartContext.Overview, renderer)
+    .withChartRenderer(ModuleChartContext.Details, renderer);
 
   return ModuleFactory.createModule(moduleConfig, {
     moduleDataSource: dataSource,

@@ -5,7 +5,7 @@ import {
   ModuleOverviewCardComponent,
 } from '../../public-api';
 import { ModuleChartContext } from '../enums/module-chart-type.enum';
-import { ModuleChartRenderer } from '../interfaces/module-chart-renderer.interface';
+import { ModuleChartRenderer } from './module-chart-renderer.model';
 
 export class ModuleView {
   private _listView: Type<unknown> = ModuleListViewComponent;

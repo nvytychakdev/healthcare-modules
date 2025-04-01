@@ -42,8 +42,8 @@ export class LineChart extends BaseChart {
         name: 'Series',
         xAxis: xAxis,
         yAxis: yAxis,
-        valueYField: 'value',
-        valueXField: 'createDateTime',
+        valueYField: this.fields.valueYField,
+        valueXField: this.fields.valueXField,
         tooltip: Tooltip.new(root, {
           labelText: '{valueY}',
         }),
@@ -52,7 +52,7 @@ export class LineChart extends BaseChart {
 
     series.data.processor = DataProcessor.new(root, {
       dateFormat: 'i',
-      dateFields: ['createDateTime'],
+      dateFields: [this.fields.valueXField],
     });
 
     series.bullets.push(() => {
