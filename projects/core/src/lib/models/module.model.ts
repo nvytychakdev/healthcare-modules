@@ -3,6 +3,7 @@ import { ModuleConfig } from '../interfaces/module-config.interface';
 import { ModuleLineChartRenderer } from './module-chart/module-line-chart-renderer.model';
 import { ModuleDataSource } from './module-data-source.model';
 import { ModuleSettings } from './module-settings.model';
+import { ModuleUnit } from './module-unit.model';
 import { ModuleView } from './module-view.model';
 
 export class Module {
@@ -10,6 +11,7 @@ export class Module {
   private _settings: ModuleSettings;
   private _dataSource: ModuleDataSource;
   private _view: ModuleView;
+  private _unit: Map<string, ModuleUnit> = new Map();
 
   get settings() {
     return this._settings;
@@ -57,6 +59,16 @@ export class Module {
   withModuleView(view: ModuleView) {
     this._view = view;
     return this;
+  }
+
+  withModuleUnits(units: Map<string, ModuleUnit>) {
+    this._unit = units;
+    return this;
+  }
+
+  getUnit(unit?: string) {
+    if (!unit) return this._unit.values().next().value;
+    return this._unit.get(unit);
   }
 
   isEnabled() {

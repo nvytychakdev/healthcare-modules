@@ -32,13 +32,20 @@ export class ModuleOverviewCardComponent implements OnInit {
   readonly chart = signal<BaseChart | null>(null);
 
   readonly latestRecord = computed(() => this.data()?.at(-1));
+  readonly value = computed(() => {
+    const value = this.latestRecord()?.value;
+    const unit = this.module.getUnit();
+    if (!unit || !value) return value;
+    return unit.format(value);
+  });
+  readonly unit = this.module.getUnit()?.shortName;
 
   ngOnInit() {
     const patientId = this.route.snapshot.paramMap.get('id');
     if (!patientId) return;
 
-    const renderer = this.module.view.getChartRenderers(ModuleChartContext.Overview);
-    const chart = renderer?.createChart(uuidv4(), ModuleChartContext.Overview);
+    const renderer = this.module.view.getChartRenderers(this.viewType);
+    const chart = renderer?.createChart(uuidv4(), this.viewType);
 
     if (chart) this.chart.set(chart);
 

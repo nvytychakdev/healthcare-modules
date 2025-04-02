@@ -19,6 +19,8 @@ export * from './lib/models/module-factory.model';
 export * from './lib/models/module-inject.model';
 export * from './lib/models/module-renderer.model';
 export * from './lib/models/module-settings.model';
+export * from './lib/models/module-unit.model';
+export * from './lib/models/module-units';
 export * from './lib/models/module-view.model';
 export * from './lib/models/module.model';
 

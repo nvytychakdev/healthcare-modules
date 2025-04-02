@@ -1,6 +1,7 @@
 import {
   createResolverProvider,
   Module,
+  MODULE_UNITS,
   ModuleChartContext,
   ModuleConfig,
   ModuleFactory,
@@ -33,6 +34,7 @@ export const createTemperatureModule = (moduleConfig: ModuleConfig) => {
     moduleDataSource: dataSource,
     moduleSettings: settings,
     moduleView: view,
+    moduleUnits: MODULE_UNITS.temperature,
   });
 };
 
