@@ -1,6 +1,7 @@
 import {
   createResolverProvider,
   Module,
+  MODULE_UNITS,
   ModuleConfig,
   ModuleFactory,
   ModuleResolver,
@@ -10,6 +11,7 @@ import { WeightModuleSettings } from './weight.settings';
 export const createWeightModule = (moduleConfig: ModuleConfig) => {
   return ModuleFactory.createModule(moduleConfig, {
     moduleSettings: new WeightModuleSettings(),
+    moduleUnits: MODULE_UNITS.weight,
   });
 };
 

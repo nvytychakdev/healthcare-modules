@@ -10,4 +10,5 @@ export const MODULE_UNITS = {
       'kelvin',
       new ModuleUnit('Kelvin', 'K').withConvertor('celsius', (value: number) => value - 273.15),
     ),
+  weight: new Map().set('kg', new ModuleUnit('Kilogram', 'kg')),
 };
