@@ -1,7 +1,4 @@
-import {
-  MODULE_DATA_TEMPERATURE_MOCK,
-  MODULE_DATA_WEIGHT_MOCK,
-} from '../../../projects/core/src/lib/mock/module-data.mock';
+import { ModulePrimitive } from '@healthcare/core';
 
 export type PatientData = {
   value: number | string;
@@ -15,38 +12,45 @@ export type Patient = {
   data: Partial<Record<string, PatientData>>;
 };
 
+const getRandomBool = () => Boolean(parseInt(Math.random().toFixed()));
+
+const generatePatient = (index: number): Patient => {
+  return {
+    id: index,
+    lastName: 'Name',
+    firstName: 'Name',
+    data: {
+      ['Temperature']: getRandomBool()
+        ? generateModuleData(1, 'Temperature', '1', [36, 45])
+        : undefined,
+      ['Weight']: getRandomBool() ? generateModuleData(1, 'Weight', '1', [40, 150]) : undefined,
+      ['Symptoms']: getRandomBool() ? generateModuleData(1, 'Symptoms', '1', [36, 45]) : undefined,
+      ['BloodPressure']: getRandomBool()
+        ? generateModuleData(1, 'BloodPressure', '1', [100, 200])
+        : undefined,
+    },
+  };
+};
+
+const generateModuleData = (
+  index: number,
+  moduleId: string,
+  moduleConfigId: string,
+  valueRange: number[],
+): ModulePrimitive => {
+  return {
+    id: `${index}`,
+    moduleId,
+    moduleConfigId,
+    createDateTime: new Date().toISOString(),
+    updateDateTime: new Date().toISOString(),
+    direction: Boolean(parseInt(Math.random().toFixed())) ? 'INCREASE' : 'DECREASE',
+    value: parseInt((Math.random() * (valueRange[1] - valueRange[0]) + valueRange[0]).toFixed()),
+  };
+};
+
 export const PATIENTS: Patient[] = [
-  {
-    id: 1,
-    firstName: 'Test',
-    lastName: 'Test',
-    data: {
-      ['Temperature']: MODULE_DATA_TEMPERATURE_MOCK.at(-1),
-    },
-  },
-  {
-    id: 2,
-    firstName: 'Test',
-    lastName: 'Test',
-    data: {
-      ['Temperature']: MODULE_DATA_TEMPERATURE_MOCK.at(-1),
-    },
-  },
-  {
-    id: 3,
-    firstName: 'Test',
-    lastName: 'Test',
-    data: {
-      ['Weight']: MODULE_DATA_WEIGHT_MOCK.at(-1),
-    },
-  },
-  {
-    id: 4,
-    firstName: 'Test',
-    lastName: 'Test',
-    data: {
-      ['Temperature']: MODULE_DATA_TEMPERATURE_MOCK.at(-1),
-      ['Weight']: MODULE_DATA_WEIGHT_MOCK.at(-1),
-    },
-  },
+  ...Array.from(Array(30))
+    .fill(null)
+    .map((v, index) => generatePatient(index)),
 ];

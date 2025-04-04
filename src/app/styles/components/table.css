@@ -1,9 +1,9 @@
 .table {
-  @apply bg-surface border border-surface-200 border-separate rounded-md border-spacing-0;
+  @apply border-surface-200 border-separate border-spacing-0 rounded-md;
 }
 
 .table .col {
-  @apply px-4 py-2 border-l border-t border-surface-200;
+  @apply border-surface-200 border-t px-2 py-2;
 }
 
 .table .head .col {
@@ -19,5 +19,5 @@
 }
 
 .table.table-clickable .row:hover {
-  @apply bg-surface-50;
+  @apply bg-neutral-800;
 }

@@ -1,3 +1,7 @@
 :host {
+  display: contents;
+}
+
+.active-item .active-item-bar {
   display: block;
 }

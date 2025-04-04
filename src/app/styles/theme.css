@@ -1,4 +1,4 @@
-@import 'tailwindcss/theme';
+@import 'tailwindcss';
 
 @theme {
   /* primary */
@@ -17,12 +17,31 @@
   --color-surface-300: hsl(219, 12.5%, 35%);
 
   /* neutral */
-  --color-neutral: hsl(216, 18.1%, 4%);
-  --color-neutral-100: hsl(216, 18.1%, 10%);
-  --color-neutral-200: hsl(216, 18.1%, 20%);
+  /* --color-neutral: hsl(216, 18.1%, 4%); */
+  /* --color-neutral-100: hsl(216, 18.1%, 10%); */
+  /* --color-neutral-200: hsl(216, 18.1%, 20%); */
 
   --color-rag-red: hsl(360 42% 40%);
   --color-rag-amber: hsl(26 57% 43%);
   --color-rag-green: hsl(102 42% 40%);
   --color-rag-gray: hsl(26 0% 35%);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-neutral-800);
+  border-radius: 100vh;
+  border: 1px solid var(--color-neutral-700);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neutral-700);
 }

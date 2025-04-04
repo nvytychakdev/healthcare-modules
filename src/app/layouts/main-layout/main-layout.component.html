@@ -1,6 +1,8 @@
-<div class="bg-neutral min-h-screen text-gray-50">
+<div class="flex min-h-svh overflow-y-scroll bg-neutral-950 text-gray-50">
   <app-main-layout-nav />
-  <div class="border-surface-200 bg-surface m-4 my-0 rounded border p-4">
-    <ng-content />
-  </div>
+  <main class="w-full pl-56">
+    <div class="m-1 grow rounded border border-neutral-700 bg-neutral-900 p-4">
+      <ng-content />
+    </div>
+  </main>
 </div>
