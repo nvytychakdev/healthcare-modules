@@ -11,11 +11,11 @@ export const routes: Routes = [
     resolve: [moduleConfigResolver],
     children: [
       {
-        path: '',
+        path: 'patients',
         component: PatientListComponent,
       },
       {
-        path: ':id',
+        path: 'patients/:id',
         resolve: [patientResolver],
         children: [
           {
@@ -23,10 +23,22 @@ export const routes: Routes = [
             component: PatientOverviewComponent,
           },
           {
-            path: 'details',
+            path: 'details/:moduleId',
             component: PatientDetailsComponent,
           },
         ],
+      },
+      {
+        path: 'views',
+        component: PatientListComponent,
+      },
+      {
+        path: 'organizations',
+        component: PatientListComponent,
+      },
+      {
+        path: 'settings',
+        component: PatientListComponent,
       },
     ],
   },

@@ -1,5 +1,11 @@
+@import 'tailwindcss';
+
 :host {
   display: contents;
+}
+
+.active-item {
+  @apply text-neutral-50;
 }
 
 .active-item .active-item-bar {

@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseChart, ChartComponent } from '@healthcare/charts';
+import { LoaderComponent } from '@healthcare/ui';
 import { v4 as uuidv4 } from 'uuid';
 import { ModuleChartContext } from '../../../enums/module-chart-type.enum';
 import { ModulePrimitive } from '../../../interfaces/module-primitive.interface';
@@ -17,7 +18,7 @@ import { ModuleDirectionComponent } from '../../module-shared/module-direction/m
 
 @Component({
   selector: 'lib-module-overview-card',
-  imports: [DatePipe, ModuleDirectionComponent, ChartComponent],
+  imports: [DatePipe, ModuleDirectionComponent, ChartComponent, LoaderComponent],
   templateUrl: './module-overview-card.component.html',
   styleUrl: './module-overview-card.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

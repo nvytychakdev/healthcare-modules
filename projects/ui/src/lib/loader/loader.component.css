@@ -1,0 +1,6 @@
+@import 'tailwindcss';
+
+:host {
+  display: block;
+  @apply w-12 text-neutral-300;
+}

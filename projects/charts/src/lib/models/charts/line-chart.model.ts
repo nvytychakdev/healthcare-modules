@@ -39,7 +39,14 @@ export class LineChart extends BaseChart {
   }
 
   private createChart(root: Root): XYChart {
-    return root.container.children.push(XYChart.new(root, {}));
+    return root.container.children.push(
+      XYChart.new(root, {
+        paddingBottom: 16,
+        paddingLeft: 0,
+        paddingRight: 0,
+        paddingTop: 0,
+      }),
+    );
   }
 
   private createXAxis(root: Root, chart: XYChart): DateAxis<AxisRenderer> {

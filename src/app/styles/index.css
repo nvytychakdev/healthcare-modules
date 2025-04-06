@@ -2,6 +2,7 @@
 
 /* components */
 @import './components/table.css';
+@import './components/tab.css';
 
 body {
   background: var(--color-neutral-950);

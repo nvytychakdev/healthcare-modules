@@ -1,14 +1,24 @@
-<nav class="fixed inset-y-0 left-0 flex h-full w-56 flex-col items-center gap-2 px-4 py-4">
-  @for (option of navOptions; track $index) {
-    <a
-      class="text-secondary relative flex w-full items-center gap-4 rounded-sm px-2 py-1 text-sm hover:bg-neutral-800"
-      [routerLink]="option.link"
-      routerLinkActive="active-item"
-      [routerLinkActiveOptions]="option.options"
-    >
-      <div class="active-item-bar absolute -left-4 hidden h-full w-0.5 rounded bg-neutral-50"></div>
-      <ng-icon [name]="option.icon" size="20" />
-      {{ option.title }}
-    </a>
-  }
+<nav class="fixed inset-y-0 left-0 flex h-full w-64 flex-col">
+  <section class="block border-b border-neutral-900 px-4 py-4">
+    <span class="font-bold">Modules v3</span>
+  </section>
+
+  <section class="flex grow flex-col gap-2 px-4 py-4">
+    @for (option of navOptions; track $index) {
+      <a
+        class="relative flex w-full items-center gap-4 rounded-sm px-2 py-1 text-sm font-semibold text-neutral-400 hover:bg-neutral-800"
+        [routerLink]="option.link"
+        routerLinkActive="active-item"
+        [routerLinkActiveOptions]="option.options"
+      >
+        <div
+          class="active-item-bar absolute -left-4 hidden h-full w-0.5 rounded bg-neutral-50"
+        ></div>
+        <ng-icon [name]="option.icon" size="20" />
+        {{ option.title }}
+      </a>
+    }
+  </section>
+
+  <section class="block border-t border-neutral-900 px-4 py-4">Footer section</section>
 </nav>

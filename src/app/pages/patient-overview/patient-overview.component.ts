@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Module } from '@healthcare/core';
 import { ModuleRegistryService } from '../../../../projects/core/src/lib/services/module-registry.service';
 import { PatientOverviewModuleComponent } from './patient-overview-module/patient-overview-module.component';
 
@@ -11,4 +13,10 @@ import { PatientOverviewModuleComponent } from './patient-overview-module/patien
 })
 export class PatientOverviewComponent {
   readonly registry = inject(ModuleRegistryService);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+
+  openDetails(module: Module) {
+    void this.router.navigate(['../details', module.id], { relativeTo: this.activatedRoute });
+  }
 }

@@ -2,7 +2,9 @@
   class="inline-flex h-full w-full flex-col items-start justify-center rounded border border-neutral-700 bg-neutral-800 p-4"
 >
   @if (module.dataSource.isLoading()) {
-    <div class="flex w-full flex-1 items-center justify-center">Loading...</div>
+    <div class="flex w-full flex-1 items-center justify-center">
+      <lib-loader />
+    </div>
   } @else {
     <div class="rounded-full bg-lime-500/20 px-4 py-2 text-lime-400">
       {{ module.moduleName }}
@@ -19,7 +21,7 @@
         <div class="flex items-end gap-2">
           <span class="text-4xl">{{ value() }}</span>
           <span>{{ unit }}</span>
-          <span>
+          <span class="text-xl/4">
             <lib-module-direction [direction]="latestRecord()?.direction" />
           </span>
         </div>

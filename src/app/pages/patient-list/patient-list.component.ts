@@ -18,6 +18,6 @@ export class PatientListComponent {
   patients: Patient[] = PATIENTS;
 
   patientClick(patient: Patient) {
-    void this.router.navigate([patient.id, 'overview']);
+    void this.router.navigate(['patients', patient.id, 'overview']);
   }
 }
