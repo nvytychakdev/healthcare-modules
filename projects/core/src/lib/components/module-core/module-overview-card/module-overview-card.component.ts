@@ -10,10 +10,10 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { BaseChart, ChartComponent } from '@healthcare/charts';
 import { LoaderComponent } from '@healthcare/ui';
-import { v4 as uuidv4 } from 'uuid';
 import { ModuleChartContext } from '../../../enums/module-chart-type.enum';
 import { ModulePrimitive } from '../../../interfaces/module-primitive.interface';
 import { MODULE } from '../../../models/module-inject.model';
+import { createViewChart } from '../../../utils/create-view-chart.util';
 import { ModuleDirectionComponent } from '../../module-shared/module-direction/module-direction.component';
 
 @Component({
@@ -45,9 +45,7 @@ export class ModuleOverviewCardComponent implements OnInit {
     const patientId = this.route.snapshot.paramMap.get('id');
     if (!patientId) return;
 
-    const renderer = this.module.view.getChartRenderers(this.viewType);
-    const chart = renderer?.createChart(uuidv4(), this.viewType);
-
+    const chart = createViewChart(this.module, this.viewType);
     if (chart) this.chart.set(chart);
 
     this.module.dataSource

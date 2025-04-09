@@ -44,7 +44,7 @@ export class LineChart extends BaseChart {
         paddingBottom: 16,
         paddingLeft: 0,
         paddingRight: 0,
-        paddingTop: 0,
+        paddingTop: 16,
       }),
     );
   }
@@ -63,6 +63,9 @@ export class LineChart extends BaseChart {
     return chart.yAxes.push(
       ValueAxis.new(root, {
         renderer: AxisRendererY.new(root, {}),
+        extraMax: 0.1,
+        extraMin: 0.1,
+        autoZoom: false,
       }),
     );
   }

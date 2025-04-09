@@ -7,37 +7,23 @@ import {
   matSettingsOutline,
   matViewColumnOutline,
 } from '@ng-icons/material-icons/outline';
+import { NAVIGATION_OPTIONS } from '../../../const/navigation-options.const';
 
 @Component({
   selector: 'app-main-layout-nav',
   imports: [RouterLink, RouterLinkActive, NgIcon],
   providers: [
-    provideIcons({ matHomeOutline, matBusinessOutline, matSettingsOutline, matViewColumnOutline }),
+    provideIcons({
+      matHomeOutline,
+      matBusinessOutline,
+      matSettingsOutline,
+      matViewColumnOutline,
+    }),
   ],
   templateUrl: './main-layout-nav.component.html',
   styleUrl: './main-layout-nav.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainLayoutNavComponent {
-  navOptions = [
-    { title: 'Patients', link: '/patients', icon: 'matHomeOutline', options: { exact: false } },
-    {
-      title: 'Organizations',
-      link: '/organizations',
-      icon: 'matBusinessOutline',
-      options: { exact: false },
-    },
-    {
-      title: 'Views',
-      link: '/views',
-      icon: 'matViewColumnOutline',
-      options: { exact: false },
-    },
-    {
-      title: 'Settings',
-      link: '/settings',
-      icon: 'matSettingsOutline',
-      options: { exact: false },
-    },
-  ];
+  readonly navOptions = NAVIGATION_OPTIONS;
 }

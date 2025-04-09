@@ -14,7 +14,7 @@
       <div class="flex w-full flex-1 items-center justify-center py-4 text-gray-500">
         @if (chart(); as chart) {
           @if (data(); as data) {
-            <lib-chart class="min-h-48" [chart]="chart" [data]="data" />
+            <lib-chart class="block min-h-48" [chart]="chart" [data]="data" />
           }
         }
       </div>

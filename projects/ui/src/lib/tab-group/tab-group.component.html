@@ -1,3 +1,4 @@
+<!-- navigation -->
 <lib-tab-nav class="mb-1 border-b border-neutral-700 pb-1">
   @for (tab of tabs(); track $index; let index = $index) {
     <div
@@ -10,6 +11,9 @@
   }
 </lib-tab-nav>
 
-@if (selectedTab()?.template(); as template) {
-  <ng-template [ngTemplateOutlet]="template" />
-}
+<!-- body -->
+<div class="flex w-full grow overflow-hidden">
+  @if (selectedTab()?.template(); as template) {
+    <ng-template [ngTemplateOutlet]="template" />
+  }
+</div>
