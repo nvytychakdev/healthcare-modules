@@ -47,8 +47,13 @@ export class ChartBuilder {
     return this;
   }
 
-  withdateAxisStrategy(strategy: ChartXYDateAxisStrategy) {
+  withDateAxisStrategy(strategy: ChartXYDateAxisStrategy) {
     this.xAxisStrategy = strategy;
+    return this;
+  }
+
+  withSeriesStrategy(strategy: ChartXYSeriesStrategy) {
+    this.seriesStrategy = strategy;
     return this;
   }
 

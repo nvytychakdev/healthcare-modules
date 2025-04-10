@@ -1,5 +1,9 @@
 @if (chart(); as chart) {
   @if (data(); as data) {
     <lib-chart [chart]="chart" [data]="data" />
+  } @else {
+    <div class="flex h-full w-full items-center justify-center">
+      <lib-loader />
+    </div>
   }
 }
