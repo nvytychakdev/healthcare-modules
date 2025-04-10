@@ -1,34 +1,56 @@
-import { Bullet, Circle, color, DataProcessor, Root, Theme, Tooltip } from '@amcharts/amcharts5';
-import { AxisRenderer } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRenderer';
-import { AxisRendererX } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRendererX';
-import { AxisRendererY } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRendererY';
-import { DateAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/DateAxis';
-import { ValueAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/ValueAxis';
-import { LineSeries } from '@amcharts/amcharts5/.internal/charts/xy/series/LineSeries';
-import { XYChart } from '@amcharts/amcharts5/.internal/charts/xy/XYChart';
-import { XYCursor } from '@amcharts/amcharts5/.internal/charts/xy/XYCursor';
+import { color, Root, Theme } from '@amcharts/amcharts5';
 import AnimatedTheme from '@amcharts/amcharts5/themes/Animated';
 import DarkTheme from '@amcharts/amcharts5/themes/Dark';
+import { ChartFeature } from '../../interfaces/chart-feature.interface';
 import { ChartRender } from '../../interfaces/chart-render.interface';
+import {
+  ChartXYDateAxisStrategy,
+  ChartXYScrollbarStrategy,
+  ChartXYSeriesStrategy,
+  ChartXYStrategy,
+  ChartXYValueAxisStrategy,
+} from '../../interfaces/chart-strategy.interface';
 import { BaseChart } from '../base-chart.model';
+import { AxisDateDefaultStrategy } from '../strategies/axis-date-default.strategy';
+import { AxisValueDefaultStrategy } from '../strategies/axis-value-default.strategy';
+import { ChartDefaultStrategy } from '../strategies/chart-default.strategy';
+import { SeriesLineDefaultStrategy } from '../strategies/series-line-default.strategy';
 
 export class LineChart extends BaseChart {
   private readonly themeColors = ['#82c535', '#087f8c', '#00ceb0'];
+
+  constructor(
+    element: string,
+    private chartStrategy: ChartXYStrategy = new ChartDefaultStrategy(),
+    private xAxisStrategy: ChartXYDateAxisStrategy = new AxisDateDefaultStrategy(),
+    private yAxisStrategy: ChartXYValueAxisStrategy = new AxisValueDefaultStrategy(),
+    private seriesStrategy: ChartXYSeriesStrategy = new SeriesLineDefaultStrategy(),
+    private scrollbarStrategy?: ChartXYScrollbarStrategy,
+    private features?: ChartFeature[],
+  ) {
+    super(element);
+  }
 
   override render(): ChartRender {
     const root = this.createRoot();
     this.applyThemes(root);
 
-    const chart = this.createChart(root);
-    const xAxis = this.createXAxis(root, chart);
-    const yAxis = this.createYAxis(root, chart);
-    const series = this.createSeries(root, chart, xAxis, yAxis);
-    const cursor = this.configureCursor(root, chart);
+    // apply list of expected strategies
+    // use these to override your chart functionality
+    const chart = this.chartStrategy.create(root);
+    const xAxis = this.xAxisStrategy.create(root, chart);
+    const yAxis = this.yAxisStrategy.create(root, chart);
+    const series = this.seriesStrategy.create(root, chart, xAxis, yAxis);
+    const scrollbarSeries = this.scrollbarStrategy?.create(root, chart, series);
+
+    // apply list of features passed into the chart
+    // use these to extend your chart functionality
+    this.features?.forEach((feature) => feature.apply({ root, chart, series }));
 
     series.appear(1000);
     chart.appear(1000, 100);
 
-    return { root, series, chart };
+    return { root, series, scrollbarSeries, chart };
   }
 
   private applyThemes(root: Root): void {
@@ -36,85 +58,5 @@ export class LineChart extends BaseChart {
     theme.rule('ColorSet').set('colors', this.themeColors.map(color));
 
     root.setThemes([AnimatedTheme.new(root), DarkTheme.new(root), theme]);
-  }
-
-  private createChart(root: Root): XYChart {
-    return root.container.children.push(
-      XYChart.new(root, {
-        paddingBottom: 16,
-        paddingLeft: 0,
-        paddingRight: 0,
-        paddingTop: 16,
-      }),
-    );
-  }
-
-  private createXAxis(root: Root, chart: XYChart): DateAxis<AxisRenderer> {
-    return chart.xAxes.push(
-      DateAxis.new(root, {
-        baseInterval: { timeUnit: 'day', count: 1 },
-        renderer: AxisRendererX.new(root, {}),
-        tooltip: Tooltip.new(root, {}),
-      }),
-    );
-  }
-
-  private createYAxis(root: Root, chart: XYChart): ValueAxis<AxisRenderer> {
-    return chart.yAxes.push(
-      ValueAxis.new(root, {
-        renderer: AxisRendererY.new(root, {}),
-        extraMax: 0.1,
-        extraMin: 0.1,
-        autoZoom: false,
-      }),
-    );
-  }
-
-  private createSeries(
-    root: Root,
-    chart: XYChart,
-    xAxis: DateAxis<AxisRenderer>,
-    yAxis: ValueAxis<AxisRenderer>,
-  ): LineSeries {
-    const series = chart.series.push(
-      LineSeries.new(root, {
-        name: 'Series',
-        xAxis: xAxis,
-        yAxis: yAxis,
-        valueYField: this.fields.valueYField,
-        valueXField: this.fields.valueXField,
-        tooltip: Tooltip.new(root, { labelText: '{valueY}' }),
-      }),
-    );
-
-    this.configureDataProcessor(root, series);
-    this.addBullets(root, series);
-
-    return series;
-  }
-
-  private configureDataProcessor(root: Root, series: LineSeries): void {
-    series.data.processor = DataProcessor.new(root, {
-      dateFormat: 'i',
-      dateFields: [this.fields.valueXField],
-    });
-  }
-
-  private configureCursor(root: Root, chart: XYChart) {
-    const cursor = chart.set('cursor', XYCursor.new(root, {}));
-    cursor.lineY.set('visible', false);
-    cursor.lineX.set('visible', false);
-    return cursor;
-  }
-
-  private addBullets(root: Root, series: LineSeries): void {
-    series.bullets.push(() => {
-      const bulletCircle = Circle.new(root, {
-        radius: 5,
-        fill: series.get('fill'),
-      });
-
-      return Bullet.new(root, { sprite: bulletCircle });
-    });
   }
 }

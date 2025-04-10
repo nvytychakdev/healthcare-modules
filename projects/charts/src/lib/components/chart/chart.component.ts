@@ -15,21 +15,25 @@ export class ChartComponent extends ChartLifecycle {
   readonly data = input.required<unknown[]>();
 
   private series?: Series;
+  private scrollbarSeries?: Series;
 
   constructor() {
     super();
 
     effect(() => {
       this.series?.data.setAll(this.data());
+      this.scrollbarSeries?.data.setAll(this.data());
     });
   }
 
   override initializeChart(): void {
-    const { root, series } = this.chart().render();
+    const { root, series, scrollbarSeries } = this.chart().render();
 
     series.data.setAll(this.data());
+    scrollbarSeries?.data.setAll(this.data());
 
     this.root = root;
     this.series = series;
+    this.scrollbarSeries = scrollbarSeries;
   }
 }

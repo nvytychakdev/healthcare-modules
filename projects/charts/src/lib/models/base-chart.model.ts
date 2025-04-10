@@ -8,10 +8,7 @@ export const CHART_RENDER_FIELDS_DEFAULT: ChartRenderFields = {
 };
 
 export abstract class BaseChart {
-  constructor(
-    public elementId: string,
-    protected fields: ChartRenderFields = CHART_RENDER_FIELDS_DEFAULT,
-  ) {}
+  constructor(public elementId: string) {}
 
   protected createRoot(): Root {
     return Root.new(this.elementId);
