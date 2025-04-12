@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TabComponent, TabGroupComponent } from '@healthcare/ui';
-import { combineLatest } from 'rxjs';
+import { combineLatest, of } from 'rxjs';
 import { ModulePrimitive } from '../../../interfaces/module-primitive.interface';
 import { MODULE } from '../../../models/module-inject.model';
 import { Module } from '../../../models/module.model';
@@ -28,18 +28,14 @@ export class ModuleDetailsComponent implements OnInit {
     if (!patientId) return;
 
     const compareModule = this.modulesRegistry.modules().at(1);
+    const moduleData$ = this.module.dataSource.getData(patientId, this.module.moduleId);
     // TODO: remove `id` check once module selector with overlay added
-    if (compareModule && this.module.id === '1') {
-      this.compareModule.set(compareModule);
-
-      combineLatest([
-        this.module.dataSource.getData(patientId, this.module.moduleId),
-        compareModule.dataSource.getData(patientId, compareModule.moduleId),
-      ]).subscribe((data) => this.data.set(data));
-    } else {
-      this.module.dataSource
-        .getData(patientId, this.module.moduleId)
-        .subscribe((data) => this.data.set([data]));
-    }
+    const compareModuleData$ =
+      compareModule?.id === '1'
+        ? compareModule.dataSource.getData(patientId, compareModule.moduleId)
+        : of(undefined);
+    combineLatest([moduleData$, compareModuleData$]).subscribe((data) => {
+      this.data.set(data.filter((d) => !!d));
+    });
   }
 }
