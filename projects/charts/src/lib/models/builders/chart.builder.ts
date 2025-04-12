@@ -1,15 +1,15 @@
-import { ChartFactory } from '../interfaces/chart-factory.interface';
-import { ChartFeature } from '../interfaces/chart-feature.interface';
-import { ChartRenderFields } from '../interfaces/chart-render-fields.interface';
+import { ChartFactory } from '../../interfaces/chart-factory.interface';
+import { ChartFeature } from '../../interfaces/chart-feature.interface';
+import { ChartRenderFields } from '../../interfaces/chart-render-fields.interface';
 import {
   ChartXYDateAxisStrategy,
   ChartXYScrollbarStrategy,
   ChartXYSeriesStrategy,
   ChartXYStrategy,
   ChartXYValueAxisStrategy,
-} from '../interfaces/chart-strategy.interface';
-import { BaseChart } from './base-chart.model';
-import { LineChart } from './charts/line-chart.model';
+} from '../../interfaces/chart-strategy.interface';
+import { BaseChart } from '../base-chart.model';
+import { LineChart } from '../charts/line-chart.model';
 
 export class ChartBuilder {
   private chartStrategy?: ChartXYStrategy;

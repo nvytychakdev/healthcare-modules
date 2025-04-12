@@ -1,6 +1,3 @@
-import { color, Root, Theme } from '@amcharts/amcharts5';
-import AnimatedTheme from '@amcharts/amcharts5/themes/Animated';
-import DarkTheme from '@amcharts/amcharts5/themes/Dark';
 import { ChartFeature } from '../../interfaces/chart-feature.interface';
 import { ChartRender } from '../../interfaces/chart-render.interface';
 import {
@@ -17,8 +14,6 @@ import { ChartDefaultStrategy } from '../strategies/chart-default.strategy';
 import { SeriesLineDefaultStrategy } from '../strategies/series-line-default.strategy';
 
 export class LineChart extends BaseChart {
-  private readonly themeColors = ['#82c535', '#087f8c', '#00ceb0'];
-
   constructor(
     element: string,
     private chartStrategy: ChartXYStrategy = new ChartDefaultStrategy(),
@@ -45,18 +40,15 @@ export class LineChart extends BaseChart {
 
     // apply list of features passed into the chart
     // use these to extend your chart functionality
-    this.features?.forEach((feature) => feature.apply({ root, chart, series }));
+    this.features?.forEach((feature) => feature.apply({ root, chart }));
 
     series.appear(1000);
     chart.appear(1000, 100);
 
-    return { root, series, scrollbarSeries, chart };
+    return { root, chart, instances: [{ series, scrollbarSeries }] };
   }
 
-  private applyThemes(root: Root): void {
-    const theme = Theme.new(root);
-    theme.rule('ColorSet').set('colors', this.themeColors.map(color));
-
-    root.setThemes([AnimatedTheme.new(root), DarkTheme.new(root), theme]);
+  override bindData(data: unknown[]): void {
+    this.seriesStrategy.bindData(data);
   }
 }

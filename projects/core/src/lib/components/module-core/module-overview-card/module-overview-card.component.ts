@@ -29,10 +29,10 @@ export class ModuleOverviewCardComponent implements OnInit {
   private readonly route = inject(ActivatedRoute);
 
   readonly module = inject(MODULE);
-  readonly data = signal<ModulePrimitive[] | null>(null);
+  readonly data = signal<ModulePrimitive[][] | null>(null);
   readonly chart = signal<BaseChart | null>(null);
 
-  readonly latestRecord = computed(() => this.data()?.at(-1));
+  readonly latestRecord = computed(() => this.data()?.at(0)?.at(-1));
   readonly value = computed(() => {
     const value = this.latestRecord()?.value;
     const unit = this.module.getUnit();
@@ -50,6 +50,6 @@ export class ModuleOverviewCardComponent implements OnInit {
 
     this.module.dataSource
       .getData(patientId, this.module.moduleId)
-      .subscribe((data) => this.data.set(data));
+      .subscribe((data) => this.data.set([data]));
   }
 }

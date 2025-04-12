@@ -28,7 +28,8 @@ export const createTemperatureModule = (moduleConfig: ModuleConfig) => {
     .withListViewComponent(TemperatureListViewComponent)
     .withOverviewComponent(TemperatureOverviewComponent)
     .withChartRenderer(ModuleChartContext.Overview, renderer)
-    .withChartRenderer(ModuleChartContext.Details, renderer);
+    .withChartRenderer(ModuleChartContext.Details, renderer)
+    .withChartRenderer(ModuleChartContext.OverlayVitals, renderer);
 
   return ModuleFactory.createModule(moduleConfig, {
     moduleDataSource: dataSource,

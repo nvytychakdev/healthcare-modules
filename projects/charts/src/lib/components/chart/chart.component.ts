@@ -1,4 +1,3 @@
-import { Series } from '@amcharts/amcharts5';
 import { ChangeDetectionStrategy, Component, effect, input } from '@angular/core';
 import { BaseChart } from '../../models/base-chart.model';
 import { ChartLifecycle } from '../../models/chart-lifecycle.model';
@@ -12,28 +11,19 @@ import { ChartLifecycle } from '../../models/chart-lifecycle.model';
 })
 export class ChartComponent extends ChartLifecycle {
   readonly chart = input.required<BaseChart>();
-  readonly data = input.required<unknown[]>();
-
-  private series?: Series;
-  private scrollbarSeries?: Series;
+  readonly data = input.required<unknown[][]>();
 
   constructor() {
     super();
 
     effect(() => {
-      this.series?.data.setAll(this.data());
-      this.scrollbarSeries?.data.setAll(this.data());
+      this.chart().bindData(...this.data());
     });
   }
 
   override initializeChart(): void {
-    const { root, series, scrollbarSeries } = this.chart().render();
-
-    series.data.setAll(this.data());
-    scrollbarSeries?.data.setAll(this.data());
-
+    const { root } = this.chart().render();
+    this.chart().bindData(...this.data());
     this.root = root;
-    this.series = series;
-    this.scrollbarSeries = scrollbarSeries;
   }
 }

@@ -28,8 +28,10 @@ export interface ChartXYSeriesStrategy {
     xAxis: DateAxis<AxisRenderer>,
     yAxis: ValueAxis<AxisRenderer>,
   ): XYSeries;
+  bindData(data: unknown[]): void;
 }
 
 export interface ChartXYScrollbarStrategy extends ChartStrategy {
   create(root: Root, chart: XYChart, series: XYSeries): XYSeries | undefined;
+  bindData?(data: unknown[]): void;
 }

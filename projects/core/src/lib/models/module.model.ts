@@ -42,6 +42,7 @@ export class Module {
     this._settings = new ModuleSettings();
     this._dataSource = new ModuleDataSource();
     this._view = new ModuleView()
+      .withChartRenderer(ModuleChartContext.OverlayVitals, new ModuleLineChartRenderer())
       .withChartRenderer(ModuleChartContext.Details, new ModuleLineChartRenderer())
       .withChartRenderer(ModuleChartContext.Overview, new ModuleLineChartRenderer());
   }

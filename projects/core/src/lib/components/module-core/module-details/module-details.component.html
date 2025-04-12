@@ -1,6 +1,10 @@
 <lib-tab-group class="h-full">
   <lib-tab textLabel="Chat">
-    <lib-module-details-chart class="h-full w-full" />
+    <lib-module-details-chart
+      class="h-full w-full"
+      [compareModule]="compareModule()"
+      [data]="data()"
+    />
   </lib-tab>
   <lib-tab textLabel="Table">Table</lib-tab>
   <lib-tab textLabel="Questionnaire">???</lib-tab>

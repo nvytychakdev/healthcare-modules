@@ -10,6 +10,8 @@ import { ChartXYSeriesStrategy } from '../../interfaces/chart-strategy.interface
 import { CHART_RENDER_FIELDS_DEFAULT } from '../base-chart.model';
 
 export class SeriesLineDefaultStrategy implements ChartXYSeriesStrategy {
+  private series?: XYSeries;
+
   constructor(private fields: ChartRenderFields = CHART_RENDER_FIELDS_DEFAULT) {}
 
   create(
@@ -32,7 +34,12 @@ export class SeriesLineDefaultStrategy implements ChartXYSeriesStrategy {
     this.configureDataProcessor(root, series);
     this.addBullets(root, series);
 
+    this.series = series;
     return series;
+  }
+
+  bindData(data: unknown[]): void {
+    this.series?.data.setAll(data);
   }
 
   private configureDataProcessor(root: Root, series: LineSeries): void {

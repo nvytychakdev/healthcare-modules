@@ -1,11 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BaseChart, ChartComponent } from '@healthcare/charts';
 import { LoaderComponent } from '@healthcare/ui';
 import { ModuleChartContext } from '../../../../enums/module-chart-type.enum';
 import { ModulePrimitive } from '../../../../interfaces/module-primitive.interface';
 import { MODULE } from '../../../../models/module-inject.model';
-import { createViewChart } from '../../../../utils/create-view-chart.util';
+import { Module } from '../../../../models/module.model';
+import {
+  createCompositeViewChart,
+  createViewChart,
+} from '../../../../utils/create-view-chart.util';
 
 @Component({
   selector: 'lib-module-details-chart',
@@ -19,18 +23,23 @@ export class ModuleDetailsChartComponent implements OnInit {
   private readonly module = inject(MODULE);
   private readonly activatedRoute = inject(ActivatedRoute);
 
+  readonly compareModule = input<Module | undefined>(undefined);
+  readonly data = input<ModulePrimitive[][] | undefined>(undefined);
+
   readonly chart = signal<BaseChart | undefined>(undefined);
-  readonly data = signal<ModulePrimitive[] | undefined>(undefined);
 
   ngOnInit(): void {
     const patientId = this.activatedRoute.snapshot.paramMap.get('id');
     if (!patientId) return;
 
+    const compareModule = this.compareModule();
+    if (compareModule) {
+      const chart = createCompositeViewChart(this.module, compareModule);
+      if (chart) this.chart.set(chart);
+      return;
+    }
+
     const chart = createViewChart(this.module, this.viewType);
     if (chart) this.chart.set(chart);
-
-    this.module.dataSource
-      .getData(patientId, this.module.moduleId)
-      .subscribe((data) => this.data.set(data));
   }
 }
