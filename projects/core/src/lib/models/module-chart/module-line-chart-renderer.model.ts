@@ -35,7 +35,7 @@ export class ModuleLineChartRenderer extends ModuleChartRenderer {
 
     return new ChartBuilder()
       .withValueAxisStrategies([yAxis, compositeStrategy])
-      .withScrollbarStrategy(new ScrollbarDefaultStrategy())
+      .withFeature(new ScrollbarDefaultStrategy())
       .withFeature(new CursorDefaultFeature())
       .build(root);
   }

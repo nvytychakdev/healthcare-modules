@@ -6,7 +6,6 @@ import { ChartFeature } from '../../interfaces/chart-feature.interface';
 import { ChartRender, ChartRenderYAxis } from '../../interfaces/chart-render.interface';
 import {
   ChartXYDateAxisStrategy,
-  ChartXYScrollbarStrategy,
   ChartXYStrategy,
   ChartXYValueAxisStrategy,
 } from '../../interfaces/chart-strategy.interface';
@@ -24,7 +23,6 @@ export class LineChart extends BaseChart {
     private yAxisStrategies: ChartXYValueAxisStrategy[] = [
       new AxisValueDefaultStrategy([new SeriesLineDefaultStrategy()]),
     ],
-    private scrollbarStrategy?: ChartXYScrollbarStrategy,
     private features?: ChartFeature[],
   ) {
     super(element);
@@ -40,7 +38,7 @@ export class LineChart extends BaseChart {
     const xAxis = this.xAxisStrategy.create(root, chart);
 
     const yAxesWithSeries = this.createValueAxis(root, chart, xAxis);
-    this.scrollbarStrategy?.create(root, chart);
+
     // apply list of features passed into the chart
     // use these to extend your chart functionality
     this.features?.forEach((feature) => feature.apply({ root, chart }));

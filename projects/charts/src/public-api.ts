@@ -20,12 +20,12 @@ export * from './lib/models/factories/line-chart.factory';
 
 export * from './lib/models/charts/line-chart.model';
 
-export * from './lib/models/features/cursor-defeault-feature.model';
-export * from './lib/models/features/cursor-minimal-feature.model';
+export * from './lib/models/features/cursor-defeault.feature';
+export * from './lib/models/features/cursor-minimal.feature';
 
+export * from './lib/models/features/scrollbar-default.feature';
 export * from './lib/models/strategies/axis-date-default.strategy';
 export * from './lib/models/strategies/axis-value-default.strategy';
 export * from './lib/models/strategies/chart-default.strategy';
 export * from './lib/models/strategies/chart-minimal.strategy';
-export * from './lib/models/strategies/scrollbar-default.strategy';
 export * from './lib/models/strategies/series-line-default.strategy';

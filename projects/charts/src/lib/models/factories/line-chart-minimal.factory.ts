@@ -3,11 +3,10 @@ import { ChartFeature } from '../../interfaces/chart-feature.interface';
 import { ChartRenderFields } from '../../interfaces/chart-render-fields.interface';
 import {
   ChartXYDateAxisStrategy,
-  ChartXYScrollbarStrategy,
   ChartXYStrategy,
   ChartXYValueAxisStrategy,
 } from '../../interfaces/chart-strategy.interface';
-import { CursorMinimalFeature } from '../features/cursor-minimal-feature.model';
+import { CursorMinimalFeature } from '../features/cursor-minimal.feature';
 import { AxisDateDefaultStrategy } from '../strategies/axis-date-default.strategy';
 import { AxisValueDefaultStrategy } from '../strategies/axis-value-default.strategy';
 import { ChartMinimalStrategy } from '../strategies/chart-minimal.strategy';
@@ -30,7 +29,7 @@ export class LineChartMinimalFactrory implements ChartFactory {
     return new CursorMinimalFeature();
   }
 
-  createScrollbar(): ChartXYScrollbarStrategy | undefined {
+  createScrollbar(): ChartFeature | undefined {
     return undefined;
   }
 }

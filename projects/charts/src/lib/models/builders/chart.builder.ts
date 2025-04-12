@@ -3,7 +3,6 @@ import { ChartFeature } from '../../interfaces/chart-feature.interface';
 import { ChartRenderFields } from '../../interfaces/chart-render-fields.interface';
 import {
   ChartXYDateAxisStrategy,
-  ChartXYScrollbarStrategy,
   ChartXYStrategy,
   ChartXYValueAxisStrategy,
 } from '../../interfaces/chart-strategy.interface';
@@ -14,7 +13,6 @@ export class ChartBuilder {
   private chartStrategy?: ChartXYStrategy;
   private xAxisStrategy?: ChartXYDateAxisStrategy;
   private yAxisStrategies?: ChartXYValueAxisStrategy[];
-  private scrollbarStrategy?: ChartXYScrollbarStrategy;
   private readonly features: ChartFeature[] = [];
 
   constructor(factory?: ChartFactory, fields?: ChartRenderFields) {
@@ -23,7 +21,9 @@ export class ChartBuilder {
     this.chartStrategy = factory?.createChart();
     this.xAxisStrategy = factory?.createDateAxis();
     this.yAxisStrategies = factory?.createValueAxes(fields);
-    this.scrollbarStrategy = factory?.createScrollbar();
+
+    const scrollbar = factory?.createScrollbar();
+    if (scrollbar) this.features.push(scrollbar);
 
     const cursor = factory?.createCursor();
     if (cursor) this.features.push(cursor);
@@ -49,18 +49,12 @@ export class ChartBuilder {
     return this;
   }
 
-  withScrollbarStrategy(strategy: ChartXYScrollbarStrategy) {
-    this.scrollbarStrategy = strategy;
-    return this;
-  }
-
   build(element: string): BaseChart {
     return new LineChart(
       element,
       this.chartStrategy,
       this.xAxisStrategy,
       this.yAxisStrategies,
-      this.scrollbarStrategy,
       this.features,
     );
   }
