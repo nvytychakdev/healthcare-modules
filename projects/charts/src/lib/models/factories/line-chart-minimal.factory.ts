@@ -4,7 +4,6 @@ import { ChartRenderFields } from '../../interfaces/chart-render-fields.interfac
 import {
   ChartXYDateAxisStrategy,
   ChartXYScrollbarStrategy,
-  ChartXYSeriesStrategy,
   ChartXYStrategy,
   ChartXYValueAxisStrategy,
 } from '../../interfaces/chart-strategy.interface';
@@ -19,16 +18,12 @@ export class LineChartMinimalFactrory implements ChartFactory {
     return new ChartMinimalStrategy();
   }
 
-  createValueAxis(): ChartXYValueAxisStrategy {
-    return new AxisValueDefaultStrategy();
+  createValueAxes(fields?: ChartRenderFields): ChartXYValueAxisStrategy[] {
+    return [new AxisValueDefaultStrategy([new SeriesLineDefaultStrategy(fields)])];
   }
 
   createDateAxis(): ChartXYDateAxisStrategy {
     return new AxisDateDefaultStrategy();
-  }
-
-  createSeries(fields?: ChartRenderFields): ChartXYSeriesStrategy {
-    return new SeriesLineDefaultStrategy(fields);
   }
 
   createCursor(): ChartFeature {

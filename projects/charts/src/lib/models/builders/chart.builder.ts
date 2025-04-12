@@ -4,7 +4,6 @@ import { ChartRenderFields } from '../../interfaces/chart-render-fields.interfac
 import {
   ChartXYDateAxisStrategy,
   ChartXYScrollbarStrategy,
-  ChartXYSeriesStrategy,
   ChartXYStrategy,
   ChartXYValueAxisStrategy,
 } from '../../interfaces/chart-strategy.interface';
@@ -14,9 +13,8 @@ import { LineChart } from '../charts/line-chart.model';
 export class ChartBuilder {
   private chartStrategy?: ChartXYStrategy;
   private xAxisStrategy?: ChartXYDateAxisStrategy;
-  private yAxisStrategy?: ChartXYValueAxisStrategy;
+  private yAxisStrategies?: ChartXYValueAxisStrategy[];
   private scrollbarStrategy?: ChartXYScrollbarStrategy;
-  private seriesStrategy?: ChartXYSeriesStrategy;
   private readonly features: ChartFeature[] = [];
 
   constructor(factory?: ChartFactory, fields?: ChartRenderFields) {
@@ -24,9 +22,8 @@ export class ChartBuilder {
 
     this.chartStrategy = factory?.createChart();
     this.xAxisStrategy = factory?.createDateAxis();
-    this.yAxisStrategy = factory?.createValueAxis();
+    this.yAxisStrategies = factory?.createValueAxes(fields);
     this.scrollbarStrategy = factory?.createScrollbar();
-    if (fields) this.seriesStrategy = factory.createSeries(fields);
 
     const cursor = factory?.createCursor();
     if (cursor) this.features.push(cursor);
@@ -42,18 +39,13 @@ export class ChartBuilder {
     return this;
   }
 
-  withValueAxisStrategy(strategy: ChartXYValueAxisStrategy) {
-    this.yAxisStrategy = strategy;
+  withValueAxisStrategies(strategies: ChartXYValueAxisStrategy[]) {
+    this.yAxisStrategies = strategies;
     return this;
   }
 
   withDateAxisStrategy(strategy: ChartXYDateAxisStrategy) {
     this.xAxisStrategy = strategy;
-    return this;
-  }
-
-  withSeriesStrategy(strategy: ChartXYSeriesStrategy) {
-    this.seriesStrategy = strategy;
     return this;
   }
 
@@ -67,8 +59,7 @@ export class ChartBuilder {
       element,
       this.chartStrategy,
       this.xAxisStrategy,
-      this.yAxisStrategy,
-      this.seriesStrategy,
+      this.yAxisStrategies,
       this.scrollbarStrategy,
       this.features,
     );

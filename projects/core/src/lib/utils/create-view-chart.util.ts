@@ -13,14 +13,10 @@ export const createCompositeViewChart = (module: Module, compositeModule: Module
     ModuleChartContext.OverlayVitals,
   );
 
-  const compositeStrategies = compositeRenderer?.getCompositeStrategies();
-  if (!compositeStrategies?.yAxisStrategy || !compositeStrategies.seriesStrategy) {
+  const compositeStrategy = compositeRenderer?.getCompositeStrategy();
+  if (!compositeStrategy) {
     throw new Error('Invalid composite chart configuration, missing strategies');
   }
 
-  return renderer?.createCompositeChart(
-    uuidv4(),
-    compositeStrategies.yAxisStrategy,
-    compositeStrategies.seriesStrategy,
-  );
+  return renderer?.createCompositeChart(uuidv4(), compositeStrategy);
 };

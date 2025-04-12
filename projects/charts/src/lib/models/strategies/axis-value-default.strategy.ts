@@ -1,11 +1,18 @@
 import { Root } from '@amcharts/amcharts5';
 import { AxisRenderer } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRenderer';
 import { AxisRendererY } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRendererY';
+import { DateAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/DateAxis';
 import { ValueAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/ValueAxis';
+import { XYSeries } from '@amcharts/amcharts5/.internal/charts/xy/series/XYSeries';
 import { XYChart } from '@amcharts/amcharts5/.internal/charts/xy/XYChart';
-import { ChartXYValueAxisStrategy } from '../../interfaces/chart-strategy.interface';
+import {
+  ChartXYSeriesStrategy,
+  ChartXYValueAxisStrategy,
+} from '../../interfaces/chart-strategy.interface';
 
 export class AxisValueDefaultStrategy implements ChartXYValueAxisStrategy {
+  constructor(private seriesStrategies: ChartXYSeriesStrategy[]) {}
+
   create(root: Root, chart: XYChart): ValueAxis<AxisRenderer> {
     return chart.yAxes.push(
       ValueAxis.new(root, {
@@ -15,5 +22,18 @@ export class AxisValueDefaultStrategy implements ChartXYValueAxisStrategy {
         autoZoom: false,
       }),
     );
+  }
+
+  createSeries(
+    root: Root,
+    chart: XYChart,
+    xAxis: DateAxis<AxisRenderer>,
+    yAxis: ValueAxis<AxisRenderer>,
+  ): XYSeries[] {
+    return this.seriesStrategies.map((strategy) => strategy.create(root, chart, xAxis, yAxis));
+  }
+
+  bindData(data: unknown[]): void {
+    return this.seriesStrategies.forEach((strategy) => strategy.bindData(data || []));
   }
 }

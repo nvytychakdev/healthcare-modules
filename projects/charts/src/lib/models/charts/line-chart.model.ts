@@ -1,9 +1,12 @@
+import { Root } from '@amcharts/amcharts5';
+import { XYChart } from '@amcharts/amcharts5/.internal/charts/xy/XYChart';
+import { AxisRenderer } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRenderer';
+import { DateAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/DateAxis';
 import { ChartFeature } from '../../interfaces/chart-feature.interface';
-import { ChartRender } from '../../interfaces/chart-render.interface';
+import { ChartRender, ChartRenderYAxis } from '../../interfaces/chart-render.interface';
 import {
   ChartXYDateAxisStrategy,
   ChartXYScrollbarStrategy,
-  ChartXYSeriesStrategy,
   ChartXYStrategy,
   ChartXYValueAxisStrategy,
 } from '../../interfaces/chart-strategy.interface';
@@ -18,8 +21,9 @@ export class LineChart extends BaseChart {
     element: string,
     private chartStrategy: ChartXYStrategy = new ChartDefaultStrategy(),
     private xAxisStrategy: ChartXYDateAxisStrategy = new AxisDateDefaultStrategy(),
-    private yAxisStrategy: ChartXYValueAxisStrategy = new AxisValueDefaultStrategy(),
-    private seriesStrategy: ChartXYSeriesStrategy = new SeriesLineDefaultStrategy(),
+    private yAxisStrategies: ChartXYValueAxisStrategy[] = [
+      new AxisValueDefaultStrategy([new SeriesLineDefaultStrategy()]),
+    ],
     private scrollbarStrategy?: ChartXYScrollbarStrategy,
     private features?: ChartFeature[],
   ) {
@@ -34,21 +38,35 @@ export class LineChart extends BaseChart {
     // use these to override your chart functionality
     const chart = this.chartStrategy.create(root);
     const xAxis = this.xAxisStrategy.create(root, chart);
-    const yAxis = this.yAxisStrategy.create(root, chart);
-    const series = this.seriesStrategy.create(root, chart, xAxis, yAxis);
-    const scrollbarSeries = this.scrollbarStrategy?.create(root, chart, series);
 
+    const yAxesWithSeries = this.createValueAxis(root, chart, xAxis);
+    this.scrollbarStrategy?.create(root, chart);
     // apply list of features passed into the chart
     // use these to extend your chart functionality
     this.features?.forEach((feature) => feature.apply({ root, chart }));
 
-    series.appear(1000);
+    // appear chart elements on the screen
+    yAxesWithSeries.forEach(({ series }) => series.forEach((s) => s.appear(1000)));
     chart.appear(1000, 100);
 
-    return { root, chart, instances: [{ series, scrollbarSeries }] };
+    return { root, chart, yAxes: yAxesWithSeries };
   }
 
-  override bindData(data: unknown[]): void {
-    this.seriesStrategy.bindData(data);
+  override bindData(...data: unknown[][]) {
+    this.yAxisStrategies.forEach((strategy, index) => {
+      strategy.bindData(data.at(index) || []);
+    });
+  }
+
+  private createValueAxis(
+    root: Root,
+    chart: XYChart,
+    xAxis: DateAxis<AxisRenderer>,
+  ): ChartRenderYAxis[] {
+    return this.yAxisStrategies.map((strategy) => {
+      const yAxis = strategy.create(root, chart);
+      const series = strategy.createSeries(root, chart, xAxis, yAxis);
+      return { axis: yAxis, series };
+    });
   }
 }

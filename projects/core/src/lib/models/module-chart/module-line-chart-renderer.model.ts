@@ -2,13 +2,13 @@ import {
   AxisValueDefaultStrategy,
   BaseChart,
   ChartBuilder,
-  ChartXYSeriesStrategy,
   ChartXYValueAxisStrategy,
+  CursorDefaultFeature,
   LineChartFactrory,
   LineChartMinimalFactrory,
+  ScrollbarDefaultStrategy,
   SeriesLineDefaultStrategy,
 } from '@healthcare/charts';
-import { ChartCompositeBuilder } from '../../../../../charts/src/lib/models/builders/chart-composite.builder';
 import { ModuleChartContext } from '../../enums/module-chart-type.enum';
 import { ModuleChartRenderer } from '../module-chart-renderer.model';
 
@@ -27,25 +27,24 @@ export class ModuleLineChartRenderer extends ModuleChartRenderer {
 
   createCompositeChart(
     root: string,
-    compareYAxesStrategy: ChartXYValueAxisStrategy = new AxisValueDefaultStrategy(),
-    compareSeriesStrategy: ChartXYSeriesStrategy = new SeriesLineDefaultStrategy(this.fields),
+    compositeStrategy: ChartXYValueAxisStrategy = this.getDefaultCompositeStrategy(),
   ) {
-    const yAxes = this.yAxesStrategy || new AxisValueDefaultStrategy();
-    const series = this.seriesStrategy || new SeriesLineDefaultStrategy(this.fields);
+    // original module yAxes registered in module configuration
+    // if missing, default line chart axis and series will be used instead
+    const yAxis = this.yAxesStrategy || this.getDefaultCompositeStrategy();
 
-    return new ChartCompositeBuilder()
-      .withValueAxisStrategies([yAxes, compareYAxesStrategy])
-      .withSeriesStrategy([series, compareSeriesStrategy])
+    return new ChartBuilder()
+      .withValueAxisStrategies([yAxis, compositeStrategy])
+      .withScrollbarStrategy(new ScrollbarDefaultStrategy())
+      .withFeature(new CursorDefaultFeature())
       .build(root);
   }
 
-  override getCompositeStrategies(): {
-    yAxisStrategy: ChartXYValueAxisStrategy | undefined;
-    seriesStrategy: ChartXYSeriesStrategy | undefined;
-  } {
-    return {
-      yAxisStrategy: this.yAxesStrategy || new AxisValueDefaultStrategy(),
-      seriesStrategy: this.seriesStrategy || new SeriesLineDefaultStrategy(this.fields),
-    };
+  override getCompositeStrategy(): ChartXYValueAxisStrategy | undefined {
+    return this.yAxesStrategy || this.getDefaultCompositeStrategy();
+  }
+
+  private getDefaultCompositeStrategy(): ChartXYValueAxisStrategy {
+    return new AxisValueDefaultStrategy([new SeriesLineDefaultStrategy(this.fields)]);
   }
 }

@@ -19,6 +19,13 @@ export interface ChartXYDateAxisStrategy extends ChartStrategy {
 
 export interface ChartXYValueAxisStrategy extends ChartStrategy {
   create(root: Root, chart: XYChart): ValueAxis<AxisRenderer>;
+  createSeries(
+    root: Root,
+    chart: XYChart,
+    xAxis: DateAxis<AxisRenderer>,
+    yAxis: ValueAxis<AxisRenderer>,
+  ): XYSeries[];
+  bindData(data: unknown[]): void;
 }
 
 export interface ChartXYSeriesStrategy {
@@ -32,6 +39,6 @@ export interface ChartXYSeriesStrategy {
 }
 
 export interface ChartXYScrollbarStrategy extends ChartStrategy {
-  create(root: Root, chart: XYChart, series: XYSeries): XYSeries | undefined;
+  create(root: Root, chart: XYChart): void;
   bindData?(data: unknown[]): void;
 }

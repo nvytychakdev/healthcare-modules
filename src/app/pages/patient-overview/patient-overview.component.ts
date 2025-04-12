@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Module } from '@healthcare/core';
-import { ModuleRegistryService } from '../../../../projects/core/src/lib/services/module-registry.service';
+import { Module, ModuleRegistryService } from '@healthcare/core';
 import { PatientOverviewModuleComponent } from './patient-overview-module/patient-overview-module.component';
 
 @Component({

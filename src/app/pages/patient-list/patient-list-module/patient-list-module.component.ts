@@ -6,8 +6,7 @@ import {
   StaticProvider,
   Type,
 } from '@angular/core';
-import { MODULE_DATA } from '@healthcare/core';
-import { ModuleRenderer } from '../../../../../projects/core/src/lib/models/module-renderer.model';
+import { MODULE_DATA, ModuleRenderer } from '@healthcare/core';
 import { Patient } from '../../../models/patient.model';
 
 @Component({

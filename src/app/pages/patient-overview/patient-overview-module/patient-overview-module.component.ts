@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Type } from '@angular/core';
-import { ModuleRenderer } from '../../../../../projects/core/src/lib/models/module-renderer.model';
+import { ModuleRenderer } from '@healthcare/core';
 
 @Component({
   selector: 'app-patient-overview-module',
