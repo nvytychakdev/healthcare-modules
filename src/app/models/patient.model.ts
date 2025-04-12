@@ -12,9 +12,9 @@ export type Patient = {
   data: Partial<Record<string, PatientData>>;
 };
 
-const getRandomBool = () => Boolean(parseInt(Math.random().toFixed()));
+export const getRandomBool = () => Boolean(parseInt(Math.random().toFixed()));
 
-const generatePatient = (index: number): Patient => {
+export const generatePatient = (index: number): Patient => {
   return {
     id: index,
     lastName: 'Name',
@@ -32,7 +32,7 @@ const generatePatient = (index: number): Patient => {
   };
 };
 
-const generateModuleData = (
+export const generateModuleData = (
   index: number,
   moduleId: string,
   moduleConfigId: string,
@@ -42,11 +42,17 @@ const generateModuleData = (
     id: `${index}`,
     moduleId,
     moduleConfigId,
-    createDateTime: new Date().toISOString(),
-    updateDateTime: new Date().toISOString(),
+    createDateTime: generateDate(index),
+    updateDateTime: generateDate(index),
     direction: Boolean(parseInt(Math.random().toFixed())) ? 'INCREASE' : 'DECREASE',
     value: parseInt((Math.random() * (valueRange[1] - valueRange[0]) + valueRange[0]).toFixed()),
   };
+};
+
+export const generateDate = (index: number) => {
+  const date = new Date();
+  date.setDate(date.getDate() + index);
+  return date.toISOString();
 };
 
 export const PATIENTS: Patient[] = [

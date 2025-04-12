@@ -1,60 +1,16 @@
+import { generateModuleData } from '../../../../../src/app/models/patient.model';
 import { ModulePrimitive } from '../interfaces/module-primitive.interface';
 
 export const MODULE_DATA_TEMPERATURE_MOCK: ModulePrimitive[] = [
-  {
-    id: '1',
-    moduleId: 'Temperature',
-    moduleConfigId: '1',
-    createDateTime: '2025-01-01T17:44:39.628Z',
-    updateDateTime: '2025-01-01T17:44:39.628Z',
-    value: 36.6,
-  },
-  {
-    id: '2',
-    moduleId: 'Temperature',
-    moduleConfigId: '1',
-    createDateTime: '2025-01-06T17:44:39.628Z',
-    updateDateTime: '2025-01-06T17:44:39.628Z',
-    value: 36.6,
-  },
-  {
-    id: '3',
-    moduleId: 'Temperature',
-    moduleConfigId: '1',
-    createDateTime: '2025-01-09T17:44:39.628Z',
-    updateDateTime: '2025-01-09T17:44:39.628Z',
-    value: 37.3,
-    direction: 'INCREASE',
-  },
+  ...Array.from(Array(30))
+    .fill(null)
+    .map((v, index) => generateModuleData(index, 'Temperature', '1', [36, 45])),
 ];
 
 export const MODULE_DATA_WEIGHT_MOCK: ModulePrimitive[] = [
-  {
-    id: '1',
-    moduleId: 'Weight',
-    moduleConfigId: '2',
-    createDateTime: '2025-01-05T17:44:39.628Z',
-    updateDateTime: '2025-01-05T17:44:39.628Z',
-    value: 75,
-  },
-  {
-    id: '2',
-    moduleId: 'Weight',
-    moduleConfigId: '2',
-    createDateTime: '2025-01-07T17:44:39.628Z',
-    updateDateTime: '2025-01-07T17:44:39.628Z',
-    value: 80,
-    direction: 'INCREASE',
-  },
-  {
-    id: '3',
-    moduleId: 'Weight',
-    moduleConfigId: '2',
-    createDateTime: '2025-01-10T17:44:39.628Z',
-    updateDateTime: '2025-01-10T17:44:39.628Z',
-    value: 78,
-    direction: 'DECREASE',
-  },
+  ...Array.from(Array(30))
+    .fill(null)
+    .map((v, index) => generateModuleData(index, 'Weight', '2', [40, 150])),
 ];
 
 export const MODULE_DATA_MOCK: Record<string, ModulePrimitive[]> = {

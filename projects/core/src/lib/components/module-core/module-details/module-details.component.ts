@@ -28,7 +28,8 @@ export class ModuleDetailsComponent implements OnInit {
     if (!patientId) return;
 
     const compareModule = this.modulesRegistry.modules().at(1);
-    if (compareModule) {
+    // TODO: remove `id` check once module selector with overlay added
+    if (compareModule && this.module.id === '1') {
       this.compareModule.set(compareModule);
 
       combineLatest([
