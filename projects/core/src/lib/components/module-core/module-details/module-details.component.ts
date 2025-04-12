@@ -31,9 +31,11 @@ export class ModuleDetailsComponent implements OnInit {
     const moduleData$ = this.module.dataSource.getData(patientId, this.module.moduleId);
     // TODO: remove `id` check once module selector with overlay added
     const compareModuleData$ =
-      compareModule?.id === '1'
+      compareModule && this.module.id === '1'
         ? compareModule.dataSource.getData(patientId, compareModule.moduleId)
         : of(undefined);
+
+    this.compareModule.set(compareModule);
     combineLatest([moduleData$, compareModuleData$]).subscribe((data) => {
       this.data.set(data.filter((d) => !!d));
     });
