@@ -4,6 +4,7 @@ import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   matBusinessOutline,
   matHomeOutline,
+  matKeyboardArrowUpOutline,
   matSettingsOutline,
   matViewColumnOutline,
 } from '@ng-icons/material-icons/outline';
@@ -18,6 +19,7 @@ import { NAVIGATION_OPTIONS } from '../../../const/navigation-options.const';
       matBusinessOutline,
       matSettingsOutline,
       matViewColumnOutline,
+      matKeyboardArrowUpOutline,
     }),
   ],
   templateUrl: './main-layout-nav.component.html',

@@ -6,7 +6,7 @@
   <section class="flex grow flex-col gap-2 px-4 py-4">
     @for (option of navOptions; track $index) {
       <a
-        class="relative flex w-full items-center gap-4 rounded-sm px-2 py-1 text-sm font-semibold text-neutral-400 hover:bg-neutral-800"
+        class="relative flex w-full items-center gap-4 rounded-sm px-2 py-1 text-sm font-semibold text-neutral-400 transition-colors hover:bg-neutral-800/50"
         [routerLink]="option.link"
         routerLinkActive="active-item"
         [routerLinkActiveOptions]="option.options"
@@ -20,5 +20,24 @@
     }
   </section>
 
-  <section class="block border-t border-neutral-900 px-4 py-4">Footer section</section>
+  <section class="block border-t border-neutral-900 px-4 py-4">
+    <div
+      class="flex cursor-pointer items-center gap-4 rounded-sm p-2 transition-colors hover:bg-neutral-800/50"
+    >
+      <img
+        class="h-10 w-10 shrink-0 grow-0 overflow-hidden rounded object-cover"
+        src="https://www.thesun.co.uk/wp-content/uploads/2019/09/000102.jpg?strip=all&w=960"
+        alt="Profile picture"
+      />
+
+      <div class="flex grow flex-col overflow-hidden whitespace-nowrap">
+        <span class="overflow-hidden text-sm font-semibold text-ellipsis">Ellie Bright</span>
+        <span class="overflow-hidden text-xs text-ellipsis text-neutral-400">Nurse</span>
+      </div>
+
+      <span class="leading-0 text-neutral-400">
+        <ng-icon name="matKeyboardArrowUpOutline" size="24" />
+      </span>
+    </div>
+  </section>
 </nav>
