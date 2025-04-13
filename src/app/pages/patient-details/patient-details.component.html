@@ -1,3 +1,15 @@
-@if (selectedModule(); as module) {
-  <app-patient-details-module [module]="module" />
-}
+<div class="flex h-full max-h-[calc(100vh-42px)] gap-2">
+  <div class="flex max-h-full w-64 flex-col gap-2 overflow-auto pr-1">
+    @for (module of registry.enabledModules(); track module.id) {
+      <app-patient-card-module
+        [module]="module"
+        [data]="patient?.data"
+        (click)="selectModule(module)"
+      />
+    }
+  </div>
+
+  @if (selectedModule(); as module) {
+    <app-patient-details-module class="grow" [module]="module" />
+  }
+</div>

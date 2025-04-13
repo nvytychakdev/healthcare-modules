@@ -27,6 +27,7 @@ export abstract class ModuleRenderer {
     effect(() => {
       const injector = this.createInjector(this.module());
       const component = this.getRenderComponent();
+      this.container()?.clear();
       this.container()?.createComponent(component, { injector });
     });
   }

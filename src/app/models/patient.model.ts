@@ -1,22 +1,17 @@
 import { ModulePrimitive } from '@healthcare/core';
 
-export type PatientData = {
-  value: number | string;
-  direction?: 'INCREASE' | 'DECREASE';
-};
-
 export type Patient = {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
-  data: Partial<Record<string, PatientData>>;
+  data: Partial<Record<string, ModulePrimitive>>;
 };
 
 export const getRandomBool = () => Boolean(parseInt(Math.random().toFixed()));
 
 export const generatePatient = (index: number): Patient => {
   return {
-    id: index,
+    id: String(index),
     lastName: 'Name',
     firstName: 'Name',
     data: {

@@ -42,7 +42,7 @@ export class ModuleOverviewCardComponent implements OnInit {
   readonly unit = this.module.getUnit()?.shortName;
 
   ngOnInit() {
-    const patientId = this.route.snapshot.paramMap.get('id');
+    const patientId = this.route.snapshot.paramMap.get('patientId');
     if (!patientId) return;
 
     const chart = createViewChart(this.module, this.viewType);

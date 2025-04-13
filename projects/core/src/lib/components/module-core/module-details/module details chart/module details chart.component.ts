@@ -29,7 +29,7 @@ export class ModuleDetailsChartComponent implements OnInit {
   readonly chart = signal<BaseChart | undefined>(undefined);
 
   ngOnInit(): void {
-    const patientId = this.activatedRoute.snapshot.paramMap.get('id');
+    const patientId = this.activatedRoute.snapshot.paramMap.get('patientId');
     if (!patientId) return;
 
     const compareModule = this.compareModule();

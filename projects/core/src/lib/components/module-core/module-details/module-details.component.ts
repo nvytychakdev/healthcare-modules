@@ -24,7 +24,7 @@ export class ModuleDetailsComponent implements OnInit {
   readonly data = signal<ModulePrimitive[][] | undefined>(undefined);
 
   ngOnInit(): void {
-    const patientId = this.activatedRoute.snapshot.paramMap.get('id');
+    const patientId = this.activatedRoute.snapshot.paramMap.get('patientId');
     if (!patientId) return;
 
     const compareModule = this.modulesRegistry.modules().at(1);

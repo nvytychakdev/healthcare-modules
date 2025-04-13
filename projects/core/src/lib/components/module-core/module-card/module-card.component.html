@@ -1,0 +1,30 @@
+<div class="flex h-32 w-full gap-0.5">
+  @if (isSelected()) {
+    <div class="card-active-indicator"></div>
+  }
+
+  <div class="card" [class.card-active]="isSelected()">
+    <div class="rounded-full bg-rose-500/20 px-4 py-2 text-rose-400">
+      {{ module.moduleName }}
+    </div>
+
+    @if (data; as moduleData) {
+      @if (moduleData[module.moduleId]; as data) {
+        <div class="flex w-full items-end justify-between">
+          <div class="flex items-end gap-2">
+            <span class="text-4xl">{{ data.value }}</span>
+            @if (module.getUnit()?.shortName; as unit) {
+              <span>{{ unit }}</span>
+            }
+
+            <span class="text-lg/4">
+              <lib-module-direction [direction]="data.direction" />
+            </span>
+          </div>
+        </div>
+      } @else {
+        <div class="flex w-full flex-1 items-center justify-center text-gray-500">No data...</div>
+      }
+    }
+  </div>
+</div>
