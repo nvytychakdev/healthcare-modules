@@ -3,6 +3,7 @@
 /* components */
 @import './components/table.css';
 @import './components/tab.css';
+@import './components/chart.css';
 
 body {
   background: var(--color-neutral-950);

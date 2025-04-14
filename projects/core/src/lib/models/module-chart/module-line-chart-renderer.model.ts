@@ -2,6 +2,7 @@ import {
   AxisValueDefaultStrategy,
   BaseChart,
   ChartBuilder,
+  ChartXYSeriesTooltipStrategy,
   ChartXYValueAxisStrategy,
   CursorDefaultFeature,
   LineChartFactrory,
@@ -9,17 +10,22 @@ import {
   ScrollbarDefaultStrategy,
   SeriesLineDefaultStrategy,
 } from '@healthcare/charts';
+import { TooltipDefaultStrategy } from '../../../../../charts/src/lib/models/strategies/tooltip-default.strategy';
 import { ModuleChartContext } from '../../enums/module-chart-type.enum';
+import { createTooltipHTML } from '../../utils/create-tooltip-html.util';
 import { ModuleChartRenderer } from '../module-chart-renderer.model';
+import { ModuleUnit } from '../module-unit.model';
 
 export class ModuleLineChartRenderer extends ModuleChartRenderer {
   createChart(root: string, context: ModuleChartContext): BaseChart {
+    const tooltip = this.getDefaultTooltip(this.units);
+
     if (context === ModuleChartContext.Overview) {
-      return new ChartBuilder(new LineChartMinimalFactrory(), this.fields).build(root);
+      return new ChartBuilder(new LineChartMinimalFactrory(), this.fields, tooltip).build(root);
     }
 
     if (context === ModuleChartContext.Details) {
-      return new ChartBuilder(new LineChartFactrory(), this.fields).build(root);
+      return new ChartBuilder(new LineChartFactrory(), this.fields, tooltip).build(root);
     }
 
     throw new Error(`Context ${context} is not implemented`);
@@ -45,6 +51,13 @@ export class ModuleLineChartRenderer extends ModuleChartRenderer {
   }
 
   private getDefaultCompositeStrategy(): ChartXYValueAxisStrategy {
-    return new AxisValueDefaultStrategy([new SeriesLineDefaultStrategy(this.fields)]);
+    return new AxisValueDefaultStrategy([
+      new SeriesLineDefaultStrategy(this.fields, this.getDefaultTooltip(this.units)),
+    ]);
+  }
+
+  private getDefaultTooltip(units?: Map<string, ModuleUnit>): ChartXYSeriesTooltipStrategy {
+    const unit = units?.values().next().value;
+    return new TooltipDefaultStrategy(createTooltipHTML(unit?.shortName));
   }
 }

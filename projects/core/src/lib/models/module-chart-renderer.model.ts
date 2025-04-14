@@ -5,9 +5,11 @@ import {
   ChartXYValueAxisStrategy,
 } from '@healthcare/charts';
 import { ModuleChartContext } from '../enums/module-chart-type.enum';
+import { ModuleUnit } from './module-unit.model';
 
 export abstract class ModuleChartRenderer {
   protected fields: ChartRenderFields = CHART_RENDER_FIELDS_DEFAULT;
+  protected units?: Map<string, ModuleUnit>;
 
   protected yAxesStrategy?: ChartXYValueAxisStrategy;
 
@@ -16,6 +18,11 @@ export abstract class ModuleChartRenderer {
     root: string,
     compositeStrategy: ChartXYValueAxisStrategy,
   ): BaseChart;
+
+  withUnits(units: Map<string, ModuleUnit>) {
+    this.units = units;
+    return this;
+  }
 
   withFields(fields: Partial<ChartRenderFields>) {
     this.fields = { ...CHART_RENDER_FIELDS_DEFAULT, ...fields };

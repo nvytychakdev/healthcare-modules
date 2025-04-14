@@ -19,10 +19,12 @@ export const createTemperatureModule = (moduleConfig: ModuleConfig) => {
   const dataSource = new TemperatureDataSource();
 
   // customized keys for temperatre chart only
-  const renderer = new ModuleLineChartRenderer().withFields({
-    valueYField: 'value',
-    valueXField: 'createDateTime',
-  });
+  const renderer = new ModuleLineChartRenderer()
+    .withFields({
+      valueYField: 'value',
+      valueXField: 'createDateTime',
+    })
+    .withUnits(MODULE_UNITS.temperature);
 
   const view = new ModuleView()
     .withListViewComponent(TemperatureListViewComponent)

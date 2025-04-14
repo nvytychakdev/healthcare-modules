@@ -1,0 +1,15 @@
+.module-tooltip {
+  @apply block overflow-hidden;
+}
+
+.module-tooltip-value {
+  @apply flex items-end gap-2;
+}
+
+.module-tooltip-main {
+  @apply text-4xl text-neutral-50;
+}
+
+.module-tooltip-unit {
+  @apply text-neutral-50;
+}
