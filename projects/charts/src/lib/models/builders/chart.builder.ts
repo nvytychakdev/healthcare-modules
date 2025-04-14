@@ -3,6 +3,7 @@ import { ChartFeature } from '../../interfaces/chart-feature.interface';
 import { ChartRenderFields } from '../../interfaces/chart-render-fields.interface';
 import {
   ChartXYDateAxisStrategy,
+  ChartXYSeriesTooltipStrategy,
   ChartXYStrategy,
   ChartXYValueAxisStrategy,
 } from '../../interfaces/chart-strategy.interface';
@@ -15,12 +16,16 @@ export class ChartBuilder {
   private yAxisStrategies?: ChartXYValueAxisStrategy[];
   private readonly features: ChartFeature[] = [];
 
-  constructor(factory?: ChartFactory, fields?: ChartRenderFields) {
+  constructor(
+    factory?: ChartFactory,
+    fields?: ChartRenderFields,
+    tooltip?: ChartXYSeriesTooltipStrategy,
+  ) {
     if (!factory) return;
 
     this.chartStrategy = factory?.createChart();
     this.xAxisStrategy = factory?.createDateAxis();
-    this.yAxisStrategies = factory?.createValueAxes(fields);
+    this.yAxisStrategies = factory?.createValueAxes(fields, tooltip);
 
     const scrollbar = factory?.createScrollbar();
     if (scrollbar) this.features.push(scrollbar);

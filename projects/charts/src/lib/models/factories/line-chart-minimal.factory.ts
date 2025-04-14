@@ -3,6 +3,7 @@ import { ChartFeature } from '../../interfaces/chart-feature.interface';
 import { ChartRenderFields } from '../../interfaces/chart-render-fields.interface';
 import {
   ChartXYDateAxisStrategy,
+  ChartXYSeriesTooltipStrategy,
   ChartXYStrategy,
   ChartXYValueAxisStrategy,
 } from '../../interfaces/chart-strategy.interface';
@@ -17,8 +18,13 @@ export class LineChartMinimalFactrory implements ChartFactory {
     return new ChartMinimalStrategy();
   }
 
-  createValueAxes(fields?: ChartRenderFields): ChartXYValueAxisStrategy[] {
-    return [new AxisValueDefaultStrategy([new SeriesLineDefaultStrategy(fields)])];
+  createValueAxes(
+    fields?: ChartRenderFields,
+    tooltip?: ChartXYSeriesTooltipStrategy,
+  ): ChartXYValueAxisStrategy[] {
+    const series = new SeriesLineDefaultStrategy(fields, tooltip);
+    const axis = new AxisValueDefaultStrategy([series]);
+    return [axis];
   }
 
   createDateAxis(): ChartXYDateAxisStrategy {

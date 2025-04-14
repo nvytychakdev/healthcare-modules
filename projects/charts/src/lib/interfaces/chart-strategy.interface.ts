@@ -1,4 +1,4 @@
-import { Root } from '@amcharts/amcharts5';
+import { Root, Tooltip } from '@amcharts/amcharts5';
 import { AxisRenderer } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRenderer';
 import { DateAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/DateAxis';
 import { ValueAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/ValueAxis';
@@ -36,6 +36,10 @@ export interface ChartXYSeriesStrategy {
     yAxis: ValueAxis<AxisRenderer>,
   ): XYSeries;
   bindData(data: unknown[]): void;
+}
+
+export interface ChartXYSeriesTooltipStrategy {
+  create(root: Root): Tooltip;
 }
 
 export interface ChartXYScrollbarStrategy extends ChartStrategy {

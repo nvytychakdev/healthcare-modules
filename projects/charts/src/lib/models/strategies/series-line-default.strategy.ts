@@ -1,4 +1,4 @@
-import { Bullet, Circle, DataProcessor, Root, Tooltip } from '@amcharts/amcharts5';
+import { Bullet, Circle, DataProcessor, Root } from '@amcharts/amcharts5';
 import { AxisRenderer } from '@amcharts/amcharts5/.internal/charts/xy/axes/AxisRenderer';
 import { DateAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/DateAxis';
 import { ValueAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/ValueAxis';
@@ -6,13 +6,20 @@ import { LineSeries } from '@amcharts/amcharts5/.internal/charts/xy/series/LineS
 import { XYSeries } from '@amcharts/amcharts5/.internal/charts/xy/series/XYSeries';
 import { XYChart } from '@amcharts/amcharts5/.internal/charts/xy/XYChart';
 import { ChartRenderFields } from '../../interfaces/chart-render-fields.interface';
-import { ChartXYSeriesStrategy } from '../../interfaces/chart-strategy.interface';
+import {
+  ChartXYSeriesStrategy,
+  ChartXYSeriesTooltipStrategy,
+} from '../../interfaces/chart-strategy.interface';
 import { CHART_RENDER_FIELDS_DEFAULT } from '../base-chart.model';
+import { TooltipDefaultStrategy } from './tooltip-default.strategy';
 
 export class SeriesLineDefaultStrategy implements ChartXYSeriesStrategy {
   private series?: XYSeries;
 
-  constructor(private fields: ChartRenderFields = CHART_RENDER_FIELDS_DEFAULT) {}
+  constructor(
+    private fields: ChartRenderFields = CHART_RENDER_FIELDS_DEFAULT,
+    private tooltipStrategy: ChartXYSeriesTooltipStrategy = new TooltipDefaultStrategy(),
+  ) {}
 
   create(
     root: Root,
@@ -27,7 +34,7 @@ export class SeriesLineDefaultStrategy implements ChartXYSeriesStrategy {
         yAxis: yAxis,
         valueYField: this.fields.valueYField,
         valueXField: this.fields.valueXField,
-        tooltip: Tooltip.new(root, { labelText: '{valueY}' }),
+        tooltip: this.tooltipStrategy.create(root),
       }),
     );
 

@@ -14,12 +14,15 @@ export class AxisValueDefaultStrategy implements ChartXYValueAxisStrategy {
   constructor(private seriesStrategies: ChartXYSeriesStrategy[]) {}
 
   create(root: Root, chart: XYChart): ValueAxis<AxisRenderer> {
+    const syncWithAxis =
+      chart.yAxes.length > 0 ? (chart.yAxes.getIndex(0) as ValueAxis<AxisRenderer>) : undefined;
     return chart.yAxes.push(
       ValueAxis.new(root, {
         renderer: AxisRendererY.new(root, {}),
         extraMax: 0.1,
         extraMin: 0.1,
         autoZoom: false,
+        syncWithAxis,
       }),
     );
   }
