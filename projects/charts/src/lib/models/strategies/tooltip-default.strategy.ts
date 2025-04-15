@@ -26,7 +26,7 @@ export class TooltipDefaultStrategy implements ChartXYSeriesTooltipStrategy {
       tooltipBackground?.setAll({
         fill: color('#262626'),
         fillOpacity: 1,
-        stroke: color('#404040'),
+        stroke: color('#3f3f47'),
         strokeWidth: 1,
         cornerRadius: 14,
         shadowOffsetX: 0,

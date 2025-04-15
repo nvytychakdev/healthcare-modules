@@ -1,23 +1,23 @@
-<table class="table-clickable table w-full">
-  <thead>
-    <tr class="head">
-      <th class="col">ID</th>
-      <th class="col">Name</th>
-      @for (module of registry.modules(); track $index) {
-        <th class="col">{{ module.moduleName }}</th>
-      }
-    </tr>
-  </thead>
+<app-layout-section class="grow">
+  <table class="table-clickable table w-full">
+    <thead>
+      <tr class="head">
+        <th class="col">Name</th>
+        @for (module of registry.modules(); track $index) {
+          <th class="col">{{ module.moduleName }}</th>
+        }
+      </tr>
+    </thead>
 
-  @for (patient of patients; track $index) {
-    <tr class="row" (click)="patientClick(patient)">
-      <td class="col">{{ patient.id }}</td>
-      <td class="col">{{ patient.firstName }} {{ patient.lastName }}</td>
-      @for (module of registry.modules(); track $index) {
-        <td class="col">
-          <app-patient-list-module [module]="module" [data]="patient.data" />
-        </td>
-      }
-    </tr>
-  }
-</table>
+    @for (patient of patients; track $index) {
+      <tr class="row" (click)="patientClick(patient)">
+        <td class="col">{{ patient.firstName }} {{ patient.lastName }}</td>
+        @for (module of registry.modules(); track $index) {
+          <td class="col">
+            <app-patient-list-module [module]="module" [data]="patient.data" />
+          </td>
+        }
+      </tr>
+    }
+  </table>
+</app-layout-section>

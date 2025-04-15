@@ -3,13 +3,14 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Module, ModuleRegistryService } from '@healthcare/core';
 import { map } from 'rxjs';
+import { LayoutSectionComponent } from '../../components/layout-section/layout-section.component';
 import { PATIENTS } from '../../models/patient.model';
 import { PatientCardModuleComponent } from './patient-card-module/patient-card-module.component';
 import { PatientDetailsModuleComponent } from './patient-details-module/patient-details-module.component';
 
 @Component({
   selector: 'app-patient-details',
-  imports: [PatientDetailsModuleComponent, PatientCardModuleComponent],
+  imports: [PatientDetailsModuleComponent, PatientCardModuleComponent, LayoutSectionComponent],
   templateUrl: './patient-details.component.html',
   styleUrl: './patient-details.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

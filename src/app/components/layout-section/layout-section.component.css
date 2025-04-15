@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+
+:host {
+  @apply block rounded border border-zinc-700 bg-zinc-900 p-4;
+}

@@ -2,5 +2,5 @@
 
 :host {
   display: block;
-  @apply w-12 text-neutral-300;
+  @apply w-12 text-zinc-300;
 }

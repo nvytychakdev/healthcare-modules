@@ -6,5 +6,5 @@
 @import './components/chart.css';
 
 body {
-  background: var(--color-neutral-950);
+  background: var(--color-zinc-950);
 }

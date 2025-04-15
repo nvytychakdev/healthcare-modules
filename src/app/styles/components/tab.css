@@ -1,7 +1,7 @@
 .tab-nav-item {
-  @apply cursor-pointer rounded-sm px-4 py-2 hover:bg-neutral-50/10;
+  @apply cursor-pointer rounded-sm px-4 py-2 hover:bg-zinc-50/10;
 }
 
 .tab-nav-item.selected {
-  @apply bg-neutral-50/5;
+  @apply bg-zinc-50/5;
 }

@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { ActivatedRouteSnapshot, ResolveFn, Routes } from '@angular/router';
 import { ModuleRegistryService } from '@healthcare/core';
 import { ModuleStateService } from '../../projects/core/src/lib/services/module-state.service';
+import { PatientLayoutComponent } from './layouts/patient-layout/patient-layout.component';
 import { PatientDetailsComponent } from './pages/patient-details/patient-details.component';
 import { PatientListComponent } from './pages/patient-list/patient-list.component';
 import { PatientOverviewComponent } from './pages/patient-overview/patient-overview.component';
@@ -29,6 +30,7 @@ export const routes: Routes = [
       {
         path: 'patients/:patientId',
         resolve: [patientResolver],
+        component: PatientLayoutComponent,
         children: [
           {
             path: 'overview',

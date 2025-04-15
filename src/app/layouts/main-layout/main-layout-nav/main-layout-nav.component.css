@@ -5,7 +5,7 @@
 }
 
 .active-item {
-  @apply text-neutral-50;
+  @apply text-zinc-50;
 }
 
 .active-item .active-item-bar {

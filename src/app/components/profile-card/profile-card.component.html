@@ -1,0 +1,54 @@
+<div class="flex flex-col gap-2">
+  <div class="flex flex-col">
+    <div class="text-3xl font-semibold">{{ patient().fullName }}</div>
+    <div class="flex gap-2">
+      <span>{{ patient().age }}</span>
+      <span class="text-zinc-400">{{ patient().gender }}</span>
+    </div>
+  </div>
+
+  <hr class="text-zinc-700" />
+
+  <div class="flex gap-8">
+    <div class="flex flex-col gap-1 text-sm">
+      <div class="flex items-center gap-2">
+        <ng-icon name="matPhoneOutline" size="16" />
+        {{ patient().phoneNumber }}
+      </div>
+
+      <div class="flex items-center gap-2">
+        <ng-icon name="matEmailOutline" size="16" />
+        {{ patient().email }}
+      </div>
+
+      <div class="flex items-center gap-2">
+        <ng-icon name="matFmdGoodOutline" size="16" />
+        {{ patient().address.street }} {{ patient().address.city }} {{ patient().address.state }}
+        {{ patient().address.zip }} {{ patient().address.country }}
+      </div>
+
+      <div class="flex items-center gap-2">
+        <ng-icon name="matContactEmergencyOutline" size="16" />
+        {{ patient().emergencyContact?.name }} {{ patient().emergencyContact?.relationship }} -
+        {{ patient().emergencyContact?.phoneNumber }}
+      </div>
+    </div>
+
+    <div class="flex flex-col gap-1 text-sm">
+      <div class="flex gap-2">
+        <span class="text-zinc-400">Language:</span>
+        {{ patient().preferredLanguage }}
+      </div>
+
+      <div class="flex gap-2">
+        <span class="text-zinc-400">Marital Status:</span>
+        {{ patient().maritalStatus }}
+      </div>
+
+      <div class="flex gap-2">
+        <span class="text-zinc-400">Blood Type:</span>
+        {{ patient().bloodType }}
+      </div>
+    </div>
+  </div>
+</div>

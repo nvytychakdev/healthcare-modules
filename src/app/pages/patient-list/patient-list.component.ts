@@ -1,12 +1,13 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModuleRegistryService } from '@healthcare/core';
+import { LayoutSectionComponent } from '../../components/layout-section/layout-section.component';
 import { Patient, PATIENTS } from '../../models/patient.model';
 import { PatientListModuleComponent } from './patient-list-module/patient-list-module.component';
 
 @Component({
   selector: 'app-patient-list',
-  imports: [PatientListModuleComponent],
+  imports: [PatientListModuleComponent, LayoutSectionComponent],
   templateUrl: './patient-list.component.html',
   styleUrl: './patient-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

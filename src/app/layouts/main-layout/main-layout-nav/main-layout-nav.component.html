@@ -1,28 +1,26 @@
 <nav class="fixed inset-y-0 left-0 flex h-full w-64 flex-col">
-  <section class="block border-b border-neutral-900 px-4 py-4">
+  <section class="block border-b border-zinc-900 px-4 py-4">
     <span class="font-bold">Modules v3</span>
   </section>
 
   <section class="flex grow flex-col gap-2 px-4 py-4">
     @for (option of navOptions; track $index) {
       <a
-        class="relative flex w-full items-center gap-4 rounded-sm px-2 py-1 text-sm font-semibold text-neutral-400 transition-colors hover:bg-neutral-800/50"
+        class="relative flex w-full items-center gap-4 rounded-sm px-2 py-1 text-sm font-semibold text-zinc-400 transition-colors hover:bg-zinc-800/50"
         [routerLink]="option.link"
         routerLinkActive="active-item"
         [routerLinkActiveOptions]="option.options"
       >
-        <div
-          class="active-item-bar absolute -left-4 hidden h-full w-0.5 rounded bg-neutral-50"
-        ></div>
+        <div class="active-item-bar absolute -left-4 hidden h-full w-0.5 rounded bg-zinc-50"></div>
         <ng-icon [name]="option.icon" size="20" />
         {{ option.title }}
       </a>
     }
   </section>
 
-  <section class="block border-t border-neutral-900 px-4 py-4">
+  <section class="block border-t border-zinc-900 px-4 py-4">
     <div
-      class="flex cursor-pointer items-center gap-4 rounded-sm p-2 transition-colors hover:bg-neutral-800/50"
+      class="flex cursor-pointer items-center gap-4 rounded-sm p-2 transition-colors hover:bg-zinc-800/50"
     >
       <img
         class="h-10 w-10 shrink-0 grow-0 overflow-hidden rounded object-cover"
@@ -32,10 +30,10 @@
 
       <div class="flex grow flex-col overflow-hidden whitespace-nowrap">
         <span class="overflow-hidden text-sm font-semibold text-ellipsis">Ellie Bright</span>
-        <span class="overflow-hidden text-xs text-ellipsis text-neutral-400">Nurse</span>
+        <span class="overflow-hidden text-xs text-ellipsis text-zinc-400">Nurse</span>
       </div>
 
-      <span class="leading-0 text-neutral-400">
+      <span class="leading-0 text-zinc-400">
         <ng-icon name="matKeyboardArrowUpOutline" size="24" />
       </span>
     </div>
