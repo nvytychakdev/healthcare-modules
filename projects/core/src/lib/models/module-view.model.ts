@@ -33,27 +33,31 @@ export class ModuleView {
 
   constructor() {}
 
-  getChartRenderers(context: ModuleChartContext) {
+  getChartRenderer(context: ModuleChartContext) {
     return this._chartRenderers.get(context);
   }
 
-  withListViewComponent(component: Type<unknown>) {
-    this._listView = component;
+  getAllChartRenderers() {
+    return Array.from(this._chartRenderers.values());
+  }
+
+  withListViewComponent(component?: Type<unknown>) {
+    if (component) this._listView = component;
     return this;
   }
 
-  withOverviewComponent(component: Type<unknown>) {
-    this._overview = component;
+  withOverviewComponent(component?: Type<unknown>) {
+    if (component) this._overview = component;
     return this;
   }
 
-  withDetailViewComponent(component: Type<unknown>) {
-    this._detailView = component;
+  withDetailViewComponent(component?: Type<unknown>) {
+    if (component) this._detailView = component;
     return this;
   }
 
-  withcardViewComponent(component: Type<unknown>) {
-    this._cardView = component;
+  withcardViewComponent(component?: Type<unknown>) {
+    if (component) this._cardView = component;
     return this;
   }
 

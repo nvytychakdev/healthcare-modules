@@ -4,11 +4,10 @@ import {
   MODULE_UNITS,
   ModuleChartContext,
   ModuleConfig,
-  ModuleFactory,
   ModuleLineChartRenderer,
   ModuleResolver,
-  ModuleView,
 } from '@healthcare/core';
+import { ModuleBuilder } from '../../../../core/src/lib/models/module-builder.model';
 import { TemperatureListViewComponent } from './temperature-list-view/temperature-list-view.component';
 import { TemperatureOverviewComponent } from './temperature-overview/temperature-overview.component';
 import { TemperatureDataSource } from './temperature.data-source';
@@ -17,28 +16,23 @@ import { TemperatureSettings } from './temperature.settings';
 export const createTemperatureModule = (moduleConfig: ModuleConfig) => {
   const settings = new TemperatureSettings();
   const dataSource = new TemperatureDataSource();
+  const renderer = new ModuleLineChartRenderer().withFields({
+    valueYField: 'value',
+    valueXField: 'createDateTime',
+  });
 
-  // customized keys for temperatre chart only
-  const renderer = new ModuleLineChartRenderer()
-    .withFields({
-      valueYField: 'value',
-      valueXField: 'createDateTime',
-    })
-    .withUnits(MODULE_UNITS.temperature);
-
-  const view = new ModuleView()
-    .withListViewComponent(TemperatureListViewComponent)
-    .withOverviewComponent(TemperatureOverviewComponent)
+  return new ModuleBuilder()
+    .withSettings(settings)
+    .withDataSource(dataSource)
+    .withUnits(MODULE_UNITS.temperature)
     .withChartRenderer(ModuleChartContext.Overview, renderer)
     .withChartRenderer(ModuleChartContext.Details, renderer)
-    .withChartRenderer(ModuleChartContext.OverlayVitals, renderer);
-
-  return ModuleFactory.createModule(moduleConfig, {
-    moduleDataSource: dataSource,
-    moduleSettings: settings,
-    moduleView: view,
-    moduleUnits: MODULE_UNITS.temperature,
-  });
+    .withChartRenderer(ModuleChartContext.OverlayVitals, renderer)
+    .withViewComponents({
+      list: TemperatureListViewComponent,
+      overview: TemperatureOverviewComponent,
+    })
+    .build(moduleConfig);
 };
 
 class TemperatureModuleResolver implements ModuleResolver {
