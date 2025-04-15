@@ -105,14 +105,10 @@ export const generatePatient = (index: number): Patient => {
     bloodType: getRandom(bloodTypes),
     notes: Math.random() < 0.5 ? 'Allergic to penicillin' : '',
     data: {
-      ['Temperature']: getRandomBool()
-        ? generateModuleData(1, 'Temperature', '1', [36, 45])
-        : undefined,
-      ['Weight']: getRandomBool() ? generateModuleData(1, 'Weight', '1', [40, 150]) : undefined,
-      ['Symptoms']: getRandomBool() ? generateModuleData(1, 'Symptoms', '1', [36, 45]) : undefined,
-      ['BloodPressure']: getRandomBool()
-        ? generateModuleData(1, 'BloodPressure', '1', [100, 200])
-        : undefined,
+      ['Temperature']: generateModuleData(1, 'Temperature', '1', [36, 45]),
+      ['Weight']: generateModuleData(1, 'Weight', '1', [40, 150]),
+      ['Symptoms']: generateModuleData(1, 'Symptoms', '1', [36, 45]),
+      ['BloodPressure']: generateModuleData(1, 'BloodPressure', '1', [100, 200]),
     },
   };
 };
