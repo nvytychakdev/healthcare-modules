@@ -56,7 +56,7 @@ export class ModuleView {
     return this;
   }
 
-  withcardViewComponent(component?: Type<unknown>) {
+  withCardViewComponent(component?: Type<unknown>) {
     if (component) this._cardView = component;
     return this;
   }

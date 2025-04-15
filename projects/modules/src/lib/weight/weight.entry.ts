@@ -2,13 +2,13 @@ import {
   createResolverProvider,
   Module,
   MODULE_UNITS,
+  ModuleBuilder,
   ModuleChartContext,
   ModuleConfig,
   ModuleLineChartRenderer,
   ModuleResolver,
   ModuleView,
 } from '@healthcare/core';
-import { ModuleBuilder } from '../../../../core/src/lib/models/module-builder.model';
 import { WeightModuleSettings } from './weight.settings';
 
 export const createWeightModule = (moduleConfig: ModuleConfig) => {

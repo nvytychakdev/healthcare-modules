@@ -24,9 +24,10 @@ type ModuleContextRenderer = {
 export class ModuleBuilder {
   private _settings?: ModuleSettings;
   private _dataSource?: ModuleDataSource;
-  private _view?: ModuleView;
+  private _view: ModuleView = new ModuleView();
   private _units?: Map<string, ModuleUnit>;
   private _chartRenderers: Array<ModuleContextRenderer> = [];
+  private _viewComponents?: ModuleViewComponents;
 
   withSettings(settings: ModuleSettings) {
     this._settings = settings;
@@ -43,13 +44,8 @@ export class ModuleBuilder {
     return this;
   }
 
-  withViewComponents({ list, overview, details, card }: ModuleViewComponents) {
-    const view = (this._view || new ModuleView())
-      .withListViewComponent(list)
-      .withOverviewComponent(overview)
-      .withDetailViewComponent(details)
-      .withcardViewComponent(card);
-    this._view = view;
+  withViewComponents(components: ModuleViewComponents) {
+    this._viewComponents = components;
     return this;
   }
 
@@ -59,17 +55,27 @@ export class ModuleBuilder {
   }
 
   withChartRenderer(context: ModuleChartContext, renderer: ModuleChartRenderer) {
-    this._chartRenderers?.push({ context, renderer });
+    this._chartRenderers.push({ context, renderer });
     return this;
   }
 
   build(moduleConfig: ModuleConfig): Module {
+    if (!this._settings) {
+      throw new Error(`${moduleConfig.moduleId} misconfigured. Required settings are missing`);
+    }
+
+    this._view = this._view
+      .withListViewComponent(this._viewComponents?.list)
+      .withOverviewComponent(this._viewComponents?.overview)
+      .withDetailViewComponent(this._viewComponents?.details)
+      .withCardViewComponent(this._viewComponents?.card);
+
     this._chartRenderers.forEach(({ context, renderer }) => {
       // set renderers for the view
-      this._view?.withChartRenderer(context, renderer);
+      this._view.withChartRenderer(context, renderer);
     });
 
-    this._view?.getAllChartRenderers().forEach((renderer) => {
+    this._view.getAllChartRenderers().forEach((renderer) => {
       // set units for all renderers
       if (this._units) renderer.withUnits(this._units);
     });

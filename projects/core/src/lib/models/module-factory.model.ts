@@ -14,11 +14,10 @@ type ModuleCreationParams = {
 
 export class ModuleFactory {
   static createModule(moduleConfig: ModuleConfig, params?: ModuleCreationParams): Module {
-    let module = new Module(moduleConfig);
-    if (params?.moduleView) module = module.withModuleView(params.moduleView);
-    if (params?.moduleSettings) module = module.withModuleSettings(params.moduleSettings);
-    if (params?.moduleDataSource) module = module.withModuleDataSource(params.moduleDataSource);
-    if (params?.moduleUnits) module = module.withModuleUnits(params.moduleUnits);
-    return module;
+    return new Module(moduleConfig)
+      .withModuleView(params?.moduleView)
+      .withModuleSettings(params?.moduleSettings)
+      .withModuleDataSource(params?.moduleDataSource)
+      .withModuleUnits(params?.moduleUnits);
   }
 }

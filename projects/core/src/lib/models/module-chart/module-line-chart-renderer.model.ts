@@ -9,8 +9,8 @@ import {
   LineChartMinimalFactrory,
   ScrollbarDefaultStrategy,
   SeriesLineDefaultStrategy,
+  TooltipDefaultStrategy,
 } from '@healthcare/charts';
-import { TooltipDefaultStrategy } from '../../../../../charts/src/lib/models/strategies/tooltip-default.strategy';
 import { ModuleChartContext } from '../../enums/module-chart-type.enum';
 import { createTooltipHTML } from '../../utils/create-tooltip-html.util';
 import { ModuleChartRenderer } from '../module-chart-renderer.model';

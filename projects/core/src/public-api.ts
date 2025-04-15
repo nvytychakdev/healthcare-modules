@@ -12,6 +12,7 @@ export * from './lib/interfaces/module-config.interface';
 export * from './lib/interfaces/module-primitive.interface';
 export * from './lib/interfaces/module-resolver.interface';
 
+export * from './lib/models/module-builder.model';
 export * from './lib/models/module-chart-renderer.model';
 export * from './lib/models/module-chart/module-line-chart-renderer.model';
 export * from './lib/models/module-data-source.model';

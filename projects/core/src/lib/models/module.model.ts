@@ -47,23 +47,23 @@ export class Module {
       .withChartRenderer(ModuleChartContext.Overview, new ModuleLineChartRenderer());
   }
 
-  withModuleSettings(moduleSettings: ModuleSettings) {
-    this._settings = moduleSettings;
+  withModuleSettings(moduleSettings?: ModuleSettings) {
+    if (moduleSettings) this._settings = moduleSettings;
     return this;
   }
 
-  withModuleDataSource(dataSource: ModuleDataSource) {
-    this._dataSource = dataSource;
+  withModuleDataSource(dataSource?: ModuleDataSource) {
+    if (dataSource) this._dataSource = dataSource;
     return this;
   }
 
-  withModuleView(view: ModuleView) {
-    this._view = view;
+  withModuleView(view?: ModuleView) {
+    if (view) this._view = view;
     return this;
   }
 
-  withModuleUnits(units: Map<string, ModuleUnit>) {
-    this._unit = units;
+  withModuleUnits(units?: Map<string, ModuleUnit>) {
+    if (units) this._unit = units;
     return this;
   }
 

@@ -2,12 +2,12 @@ import {
   createResolverProvider,
   Module,
   MODULE_UNITS,
+  ModuleBuilder,
   ModuleChartContext,
   ModuleConfig,
   ModuleLineChartRenderer,
   ModuleResolver,
 } from '@healthcare/core';
-import { ModuleBuilder } from '../../../../core/src/lib/models/module-builder.model';
 import { TemperatureListViewComponent } from './temperature-list-view/temperature-list-view.component';
 import { TemperatureOverviewComponent } from './temperature-overview/temperature-overview.component';
 import { TemperatureDataSource } from './temperature.data-source';
