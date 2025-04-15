@@ -1,4 +1,4 @@
-<div class="flex flex-col gap-2">
+<div class="flex flex-col gap-2 font-semibold">
   <div class="flex flex-col">
     <div class="text-3xl font-semibold">{{ patient().fullName }}</div>
     <div class="flex gap-2">
@@ -13,41 +13,45 @@
     <div class="flex flex-col gap-1 text-sm">
       <div class="flex items-center gap-2">
         <ng-icon name="matPhoneOutline" size="16" />
-        {{ patient().phoneNumber }}
+        <span>{{ patient().phoneNumber }}</span>
       </div>
 
       <div class="flex items-center gap-2">
         <ng-icon name="matEmailOutline" size="16" />
-        {{ patient().email }}
+        <span>{{ patient().email }}</span>
       </div>
 
       <div class="flex items-center gap-2">
         <ng-icon name="matFmdGoodOutline" size="16" />
-        {{ patient().address.street }} {{ patient().address.city }} {{ patient().address.state }}
-        {{ patient().address.zip }} {{ patient().address.country }}
+        <span>
+          {{ patient().address.street }} {{ patient().address.city }} {{ patient().address.state }}
+          {{ patient().address.zip }} {{ patient().address.country }}
+        </span>
       </div>
 
       <div class="flex items-center gap-2">
         <ng-icon name="matContactEmergencyOutline" size="16" />
-        {{ patient().emergencyContact?.name }} {{ patient().emergencyContact?.relationship }} -
-        {{ patient().emergencyContact?.phoneNumber }}
+        <span>
+          {{ patient().emergencyContact?.name }}, {{ patient().emergencyContact?.relationship }} -
+          {{ patient().emergencyContact?.phoneNumber }}
+        </span>
       </div>
     </div>
 
     <div class="flex flex-col gap-1 text-sm">
       <div class="flex gap-2">
         <span class="text-zinc-400">Language:</span>
-        {{ patient().preferredLanguage }}
+        <span>{{ patient().preferredLanguage }}</span>
       </div>
 
       <div class="flex gap-2">
         <span class="text-zinc-400">Marital Status:</span>
-        {{ patient().maritalStatus }}
+        <span>{{ patient().maritalStatus }}</span>
       </div>
 
       <div class="flex gap-2">
         <span class="text-zinc-400">Blood Type:</span>
-        {{ patient().bloodType }}
+        <span>{{ patient().bloodType }}</span>
       </div>
     </div>
   </div>
