@@ -6,6 +6,7 @@ import { ModuleChartContext } from '../../../../enums/module-chart-type.enum';
 import { ModulePrimitive } from '../../../../interfaces/module-primitive.interface';
 import { MODULE } from '../../../../models/module-inject.model';
 import { Module } from '../../../../models/module.model';
+import { ModuleStateService } from '../../../../services/module-state.service';
 import {
   createCompositeViewChart,
   createViewChart,
@@ -19,10 +20,11 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModuleDetailsChartComponent implements OnInit {
-  private readonly viewType = ModuleChartContext.Details;
   private readonly module = inject(MODULE);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly moduleState = inject(ModuleStateService);
 
+  private readonly viewType = ModuleChartContext.Details;
   readonly compareModule = input<Module | undefined>(undefined);
   readonly data = input<ModulePrimitive[][] | undefined>(undefined);
 
@@ -32,14 +34,21 @@ export class ModuleDetailsChartComponent implements OnInit {
     const patientId = this.activatedRoute.snapshot.paramMap.get('patientId');
     if (!patientId) return;
 
+    const preferredUnit = this.moduleState.getPreferredUnit(this.module.moduleId);
     const compareModule = this.compareModule();
     if (compareModule) {
-      const chart = createCompositeViewChart(this.module, compareModule);
+      const compositePreferredUnit = this.moduleState.getPreferredUnit(compareModule.moduleId);
+      const chart = createCompositeViewChart(
+        this.module,
+        compareModule,
+        preferredUnit,
+        compositePreferredUnit,
+      );
       if (chart) this.chart.set(chart);
       return;
     }
 
-    const chart = createViewChart(this.module, this.viewType);
+    const chart = createViewChart(this.module, this.viewType, preferredUnit);
     if (chart) this.chart.set(chart);
   }
 }

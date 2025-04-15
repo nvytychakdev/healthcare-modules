@@ -10,6 +10,7 @@ import { ModuleUnit } from './module-unit.model';
 export abstract class ModuleChartRenderer {
   protected fields: ChartRenderFields = CHART_RENDER_FIELDS_DEFAULT;
   protected units?: Map<string, ModuleUnit>;
+  protected preferredUnit?: string;
 
   protected yAxesStrategy?: ChartXYValueAxisStrategy;
 
@@ -34,7 +35,12 @@ export abstract class ModuleChartRenderer {
     return this;
   }
 
-  getCompositeStrategy(): ChartXYValueAxisStrategy | undefined {
+  getCompositeStrategy(preferredUnit?: string): ChartXYValueAxisStrategy | undefined {
     return this.yAxesStrategy;
+  }
+
+  withPreferredUnits(unit?: string) {
+    this.preferredUnit = unit;
+    return this;
   }
 }

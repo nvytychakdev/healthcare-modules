@@ -17,8 +17,8 @@ import { ModuleDetailsChartComponent } from './module details chart/module detai
 })
 export class ModuleDetailsComponent implements OnInit {
   private readonly modulesRegistry = inject(ModuleRegistryService);
-  private readonly module = inject(MODULE);
   private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly module = inject(MODULE);
 
   readonly compareModule = signal<Module | undefined>(undefined);
   readonly data = signal<ModulePrimitive[][] | undefined>(undefined);

@@ -14,11 +14,10 @@ import {
 import { ModuleChartContext } from '../../enums/module-chart-type.enum';
 import { createTooltipHTML } from '../../utils/create-tooltip-html.util';
 import { ModuleChartRenderer } from '../module-chart-renderer.model';
-import { ModuleUnit } from '../module-unit.model';
 
 export class ModuleLineChartRenderer extends ModuleChartRenderer {
   createChart(root: string, context: ModuleChartContext): BaseChart {
-    const tooltip = this.getDefaultTooltip(this.units);
+    const tooltip = this.getDefaultTooltip(this.preferredUnit);
 
     if (context === ModuleChartContext.Overview) {
       return new ChartBuilder(new LineChartMinimalFactrory(), this.fields, tooltip).build(root);
@@ -31,33 +30,30 @@ export class ModuleLineChartRenderer extends ModuleChartRenderer {
     throw new Error(`Context ${context} is not implemented`);
   }
 
-  createCompositeChart(
-    root: string,
-    compositeStrategy: ChartXYValueAxisStrategy = this.getDefaultCompositeStrategy(),
-  ) {
+  createCompositeChart(root: string, yAxisComposite: ChartXYValueAxisStrategy) {
     // original module yAxes registered in module configuration
     // if missing, default line chart axis and series will be used instead
-    const yAxis = this.yAxesStrategy || this.getDefaultCompositeStrategy();
+    const yAxis = this.yAxesStrategy || this.getDefaultCompositeStrategy(this.preferredUnit);
 
     return new ChartBuilder()
-      .withValueAxisStrategies([yAxis, compositeStrategy])
+      .withValueAxisStrategies([yAxis, yAxisComposite])
       .withFeature(new ScrollbarDefaultStrategy())
       .withFeature(new CursorDefaultFeature())
       .build(root);
   }
 
-  override getCompositeStrategy(): ChartXYValueAxisStrategy | undefined {
-    return this.yAxesStrategy || this.getDefaultCompositeStrategy();
+  override getCompositeStrategy(preferredUnit?: string): ChartXYValueAxisStrategy | undefined {
+    return this.yAxesStrategy || this.getDefaultCompositeStrategy(preferredUnit);
   }
 
-  private getDefaultCompositeStrategy(): ChartXYValueAxisStrategy {
+  private getDefaultCompositeStrategy(preferredUnit?: string): ChartXYValueAxisStrategy {
     return new AxisValueDefaultStrategy([
-      new SeriesLineDefaultStrategy(this.fields, this.getDefaultTooltip(this.units)),
+      new SeriesLineDefaultStrategy(this.fields, this.getDefaultTooltip(preferredUnit)),
     ]);
   }
 
-  private getDefaultTooltip(units?: Map<string, ModuleUnit>): ChartXYSeriesTooltipStrategy {
-    const unit = units?.values().next().value;
+  private getDefaultTooltip(preferredUnit?: string): ChartXYSeriesTooltipStrategy {
+    const unit = preferredUnit ? this.units?.get(preferredUnit) : this.units?.values().next().value;
     return new TooltipDefaultStrategy(createTooltipHTML(unit?.shortName));
   }
 }
