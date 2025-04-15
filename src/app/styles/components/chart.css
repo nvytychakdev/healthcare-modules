@@ -7,9 +7,13 @@
 }
 
 .module-tooltip-main {
-  @apply text-4xl text-neutral-50;
+  @apply text-3xl font-semibold text-neutral-50;
 }
 
 .module-tooltip-unit {
   @apply text-neutral-50;
+}
+
+.module-tooltip-date {
+  @apply text-xs text-neutral-400;
 }

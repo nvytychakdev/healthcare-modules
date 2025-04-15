@@ -47,6 +47,9 @@ export const generateModuleData = (
 export const generateDate = (index: number) => {
   const date = new Date();
   date.setDate(date.getDate() + index);
+  date.setHours(Math.floor(Math.random() * 23));
+  date.setMinutes(Math.floor(Math.random() * 59));
+  date.setSeconds(Math.floor(Math.random() * 59));
   return date.toISOString();
 };
 

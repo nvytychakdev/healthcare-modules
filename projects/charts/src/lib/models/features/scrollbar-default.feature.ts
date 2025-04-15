@@ -5,12 +5,14 @@ import { ChartFeature } from '../../interfaces/chart-feature.interface';
 export class ScrollbarDefaultStrategy implements ChartFeature {
   apply(context: ChartContext): void {
     const { root, chart } = context;
-    chart.set(
+    const scrollbar = chart.set(
       'scrollbarX',
       XYChartScrollbar.new(root, {
         orientation: 'horizontal',
         height: 60,
       }),
     );
+
+    chart.bottomAxesContainer.children.push(scrollbar);
   }
 }
