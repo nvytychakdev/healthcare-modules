@@ -1,3 +1,4 @@
+import { ChartDataTransformerStrategy } from './chart-data-transformer.interface';
 import { ChartFeature } from './chart-feature.interface';
 import { ChartRenderFields } from './chart-render-fields.interface';
 import {
@@ -12,6 +13,7 @@ export interface ChartFactory {
   createValueAxes(
     fields?: ChartRenderFields,
     tooltip?: ChartXYSeriesTooltipStrategy,
+    transformers?: ChartDataTransformerStrategy[],
   ): ChartXYValueAxisStrategy[];
   createDateAxis(): ChartXYDateAxisStrategy;
   createCursor(): ChartFeature;

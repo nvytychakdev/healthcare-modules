@@ -75,11 +75,6 @@ export class ModuleBuilder {
       this._view.withChartRenderer(context, renderer);
     });
 
-    this._view.getAllChartRenderers().forEach((renderer) => {
-      // set units for all renderers
-      if (this._units) renderer.withUnits(this._units);
-    });
-
     return ModuleFactory.createModule(moduleConfig, {
       moduleDataSource: this._dataSource,
       moduleSettings: this._settings,

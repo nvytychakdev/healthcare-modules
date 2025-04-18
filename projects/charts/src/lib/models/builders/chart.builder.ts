@@ -1,3 +1,4 @@
+import { ChartDataTransformerStrategy } from '../../interfaces/chart-data-transformer.interface';
 import { ChartFactory } from '../../interfaces/chart-factory.interface';
 import { ChartFeature } from '../../interfaces/chart-feature.interface';
 import { ChartRenderFields } from '../../interfaces/chart-render-fields.interface';
@@ -20,12 +21,13 @@ export class ChartBuilder {
     factory?: ChartFactory,
     fields?: ChartRenderFields,
     tooltip?: ChartXYSeriesTooltipStrategy,
+    transformers?: ChartDataTransformerStrategy[],
   ) {
     if (!factory) return;
 
     this.chartStrategy = factory?.createChart();
     this.xAxisStrategy = factory?.createDateAxis();
-    this.yAxisStrategies = factory?.createValueAxes(fields, tooltip);
+    this.yAxisStrategies = factory?.createValueAxes(fields, tooltip, transformers);
 
     const scrollbar = factory?.createScrollbar();
     if (scrollbar) this.features.push(scrollbar);

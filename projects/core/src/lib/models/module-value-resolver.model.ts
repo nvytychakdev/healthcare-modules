@@ -45,15 +45,19 @@ export class ModuleValueResolver {
     return this;
   }
 
-  resolveRecord(context: ModuleValueContext, data: ModuleData) {
+  resolveRecord(context: ModuleValueContext, data: ModuleData): ModulePrimitive | undefined {
     return this._recordResolver(context, data);
   }
 
-  resolveValue(context: ModuleValueContext, data: ModulePrimitive, unit?: ModuleUnit) {
+  resolveValue(
+    context: ModuleValueContext,
+    data: ModulePrimitive,
+    unit?: ModuleUnit,
+  ): string | undefined {
     return this._valueResolver(context, data, unit);
   }
 
-  resolveUnit(context: ModuleValueContext, preferredUnit?: string) {
+  resolveUnit(context: ModuleValueContext, preferredUnit?: string): ModuleUnit | undefined {
     return this._unitResolver(context, preferredUnit);
   }
 }

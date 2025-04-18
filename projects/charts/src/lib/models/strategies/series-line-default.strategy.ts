@@ -5,6 +5,7 @@ import { ValueAxis } from '@amcharts/amcharts5/.internal/charts/xy/axes/ValueAxi
 import { LineSeries } from '@amcharts/amcharts5/.internal/charts/xy/series/LineSeries';
 import { XYSeries } from '@amcharts/amcharts5/.internal/charts/xy/series/XYSeries';
 import { XYChart } from '@amcharts/amcharts5/.internal/charts/xy/XYChart';
+import { ChartDataTransformerStrategy } from '../../interfaces/chart-data-transformer.interface';
 import { ChartRenderFields } from '../../interfaces/chart-render-fields.interface';
 import {
   ChartXYSeriesStrategy,
@@ -15,11 +16,10 @@ import { TooltipDefaultStrategy } from './tooltip-default.strategy';
 
 export class SeriesLineDefaultStrategy implements ChartXYSeriesStrategy {
   private series?: XYSeries;
+  private _tooltipStrategy: ChartXYSeriesTooltipStrategy = new TooltipDefaultStrategy();
+  private readonly _dataTransformers: ChartDataTransformerStrategy[] = [];
 
-  constructor(
-    private fields: ChartRenderFields = CHART_RENDER_FIELDS_DEFAULT,
-    private tooltipStrategy: ChartXYSeriesTooltipStrategy = new TooltipDefaultStrategy(),
-  ) {}
+  constructor(private fields: ChartRenderFields = CHART_RENDER_FIELDS_DEFAULT) {}
 
   create(
     root: Root,
@@ -34,7 +34,7 @@ export class SeriesLineDefaultStrategy implements ChartXYSeriesStrategy {
         yAxis: yAxis,
         valueYField: this.fields.valueYField,
         valueXField: this.fields.valueXField,
-        tooltip: this.tooltipStrategy.create(root),
+        tooltip: this._tooltipStrategy.create(root),
       }),
     );
 
@@ -46,7 +46,23 @@ export class SeriesLineDefaultStrategy implements ChartXYSeriesStrategy {
   }
 
   bindData(data: unknown[]): void {
-    this.series?.data.setAll(data);
+    const transformedData = this.applyDataTransformers(data);
+    this.series?.data.setAll(transformedData);
+  }
+
+  withDataTransformer(transformer?: ChartDataTransformerStrategy) {
+    if (transformer) this._dataTransformers.push(transformer);
+    return this;
+  }
+
+  withTooltipStrategy(tooltip?: ChartXYSeriesTooltipStrategy) {
+    if (tooltip) this._tooltipStrategy = tooltip;
+    return this;
+  }
+
+  private applyDataTransformers(data: unknown[]): unknown[] {
+    if (!this._dataTransformers.length) return data;
+    return this._dataTransformers.reduce((acc, transformFn) => transformFn(acc), data);
   }
 
   private configureDataProcessor(root: Root, series: LineSeries): void {

@@ -6,11 +6,12 @@ import {
 } from '@healthcare/charts';
 import { ModuleChartContext } from '../enums/module-chart-context.enum';
 import { ModuleUnit } from './module-unit.model';
+import { Module } from './module.model';
 
 export abstract class ModuleChartRenderer {
+  protected moduleRef?: Module;
   protected fields: ChartRenderFields = CHART_RENDER_FIELDS_DEFAULT;
-  protected units?: Map<string, ModuleUnit>;
-  protected preferredUnit?: string;
+  protected preferredUnit?: ModuleUnit;
 
   protected yAxesStrategy?: ChartXYValueAxisStrategy;
 
@@ -20,8 +21,8 @@ export abstract class ModuleChartRenderer {
     compositeStrategy: ChartXYValueAxisStrategy,
   ): BaseChart;
 
-  withUnits(units: Map<string, ModuleUnit>) {
-    this.units = units;
+  withModule(module: Module) {
+    this.moduleRef = module;
     return this;
   }
 
@@ -35,11 +36,11 @@ export abstract class ModuleChartRenderer {
     return this;
   }
 
-  getCompositeStrategy(preferredUnit?: string): ChartXYValueAxisStrategy | undefined {
+  getCompositeStrategy(preferredUnit?: ModuleUnit): ChartXYValueAxisStrategy | undefined {
     return this.yAxesStrategy;
   }
 
-  withPreferredUnits(unit?: string) {
+  withPreferredUnits(unit?: ModuleUnit) {
     this.preferredUnit = unit;
     return this;
   }

@@ -22,7 +22,7 @@ export class LineChartMinimalFactrory implements ChartFactory {
     fields?: ChartRenderFields,
     tooltip?: ChartXYSeriesTooltipStrategy,
   ): ChartXYValueAxisStrategy[] {
-    const series = new SeriesLineDefaultStrategy(fields, tooltip);
+    const series = new SeriesLineDefaultStrategy(fields).withTooltipStrategy(tooltip);
     const axis = new AxisValueDefaultStrategy([series]);
     return [axis];
   }
