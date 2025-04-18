@@ -10,7 +10,7 @@
       {{ module.moduleName }}
     </div>
 
-    @if (latestRecord()) {
+    @if (record(); as record) {
       <div class="flex w-full flex-1 items-center justify-center py-4 text-gray-500">
         @if (chart(); as chart) {
           @if (data(); as data) {
@@ -21,13 +21,13 @@
       <div class="flex w-full items-end justify-between">
         <div class="flex items-end gap-2">
           <span class="text-4xl">{{ value() }}</span>
-          <span>{{ unit }}</span>
+          <span>{{ unit?.shortName }}</span>
           <span class="text-lg/4">
-            <lib-module-direction [direction]="latestRecord()?.direction" />
+            <lib-module-direction [direction]="record.direction" />
           </span>
         </div>
         <div>
-          {{ latestRecord()?.createDateTime | date }}
+          {{ record.createDateTime | date }}
         </div>
       </div>
     } @else {

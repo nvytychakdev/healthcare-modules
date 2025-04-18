@@ -9,16 +9,16 @@
     </div>
 
     @if (data; as moduleData) {
-      @if (moduleData[module.moduleId]; as data) {
+      @if (record) {
         <div class="flex w-full items-end justify-between">
           <div class="flex items-end gap-2">
-            <span class="text-4xl">{{ data.value }}</span>
-            @if (module.getUnit()?.shortName; as unit) {
-              <span>{{ unit }}</span>
+            <span class="text-4xl">{{ value() }}</span>
+            @if (unit) {
+              <span>{{ unit.shortName }}</span>
             }
 
             <span class="text-lg/4">
-              <lib-module-direction [direction]="data.direction" />
+              <lib-module-direction [direction]="record.direction" />
             </span>
           </div>
         </div>

@@ -1,9 +1,10 @@
-import { ModuleChartContext } from '../enums/module-chart-type.enum';
+import { ModuleChartContext } from '../enums/module-chart-context.enum';
 import { ModuleConfig } from '../interfaces/module-config.interface';
 import { ModuleLineChartRenderer } from './module-chart/module-line-chart-renderer.model';
 import { ModuleDataSource } from './module-data-source.model';
 import { ModuleSettings } from './module-settings.model';
 import { ModuleUnit } from './module-unit.model';
+import { ModuleValueResolver } from './module-value-resolver.model';
 import { ModuleView } from './module-view.model';
 
 export class Module {
@@ -11,7 +12,7 @@ export class Module {
   private _settings: ModuleSettings;
   private _dataSource: ModuleDataSource;
   private _view: ModuleView;
-  private _unit: Map<string, ModuleUnit> = new Map();
+  private _valueResolver: ModuleValueResolver;
 
   get settings() {
     return this._settings;
@@ -37,10 +38,15 @@ export class Module {
     return this._view;
   }
 
+  get valueResolver() {
+    return this._valueResolver;
+  }
+
   constructor(moduleConfig: ModuleConfig) {
     this._config = moduleConfig;
     this._settings = new ModuleSettings();
     this._dataSource = new ModuleDataSource();
+    this._valueResolver = new ModuleValueResolver().withModule(this);
     this._view = new ModuleView()
       .withChartRenderer(ModuleChartContext.OverlayVitals, new ModuleLineChartRenderer())
       .withChartRenderer(ModuleChartContext.Details, new ModuleLineChartRenderer())
@@ -63,13 +69,13 @@ export class Module {
   }
 
   withModuleUnits(units?: Map<string, ModuleUnit>) {
-    if (units) this._unit = units;
+    this._valueResolver.withModuleUnits(units);
     return this;
   }
 
-  getUnit(unit?: string) {
-    if (!unit) return this._unit.values().next().value;
-    return this._unit.get(unit);
+  withModuleValueResolver(resolver: ModuleValueResolver) {
+    if (resolver) this._valueResolver = resolver.withModule(this);
+    return this;
   }
 
   isEnabled() {

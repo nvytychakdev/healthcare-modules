@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MODULE, MODULE_DATA, ModuleDirectionComponent } from '@healthcare/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ModuleDirectionComponent, ModuleListViewComponent } from '@healthcare/core';
 
 @Component({
   selector: 'lib-temperature-list-view',
@@ -8,7 +8,4 @@ import { MODULE, MODULE_DATA, ModuleDirectionComponent } from '@healthcare/core'
   styleUrl: './temperature-list-view.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TemperatureListViewComponent {
-  readonly module = inject(MODULE);
-  readonly data = inject(MODULE_DATA);
-}
+export class TemperatureListViewComponent extends ModuleListViewComponent {}

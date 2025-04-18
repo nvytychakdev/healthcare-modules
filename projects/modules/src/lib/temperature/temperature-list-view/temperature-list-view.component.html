@@ -1,11 +1,11 @@
 <div class="flex items-center gap-1">
   @if (module && data) {
-    @if (data[module.moduleId]; as moduleData) {
+    @if (record) {
       <div
         class="inline-flex items-center justify-center gap-2 rounded-sm bg-lime-500/20 px-2 py-1 text-sm text-lime-400"
       >
-        <span>{{ moduleData.value }}</span>
-        <lib-module-direction class="text-lg/4" [direction]="moduleData.direction" />
+        <span>{{ value() }}</span>
+        <lib-module-direction class="text-lg/4" [direction]="record.direction" />
       </div>
     }
   }

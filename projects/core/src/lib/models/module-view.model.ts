@@ -5,7 +5,7 @@ import {
   ModuleOverviewCardComponent,
 } from '../../public-api';
 import { ModuleCardComponent } from '../components/module-core/module-card/module-card.component';
-import { ModuleChartContext } from '../enums/module-chart-type.enum';
+import { ModuleChartContext } from '../enums/module-chart-context.enum';
 import { ModuleChartRenderer } from './module-chart-renderer.model';
 
 export class ModuleView {

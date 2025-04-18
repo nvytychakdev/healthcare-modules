@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject, input, OnInit, signal } fro
 import { ActivatedRoute } from '@angular/router';
 import { BaseChart, ChartComponent } from '@healthcare/charts';
 import { LoaderComponent } from '@healthcare/ui';
-import { ModuleChartContext } from '../../../../enums/module-chart-type.enum';
+import { ModuleChartContext } from '../../../../enums/module-chart-context.enum';
 import { ModulePrimitive } from '../../../../interfaces/module-primitive.interface';
 import { MODULE } from '../../../../models/module-inject.model';
 import { Module } from '../../../../models/module.model';

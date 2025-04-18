@@ -4,7 +4,7 @@ import {
   ChartRenderFields,
   ChartXYValueAxisStrategy,
 } from '@healthcare/charts';
-import { ModuleChartContext } from '../enums/module-chart-type.enum';
+import { ModuleChartContext } from '../enums/module-chart-context.enum';
 import { ModuleUnit } from './module-unit.model';
 
 export abstract class ModuleChartRenderer {

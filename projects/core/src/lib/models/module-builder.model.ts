@@ -1,5 +1,5 @@
 import { Type } from '@angular/core';
-import { ModuleChartContext } from '../enums/module-chart-type.enum';
+import { ModuleChartContext } from '../enums/module-chart-context.enum';
 import { ModuleConfig } from '../interfaces/module-config.interface';
 import { ModuleChartRenderer } from './module-chart-renderer.model';
 import { ModuleDataSource } from './module-data-source.model';

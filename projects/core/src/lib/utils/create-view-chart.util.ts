@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { ModuleChartContext } from '../enums/module-chart-type.enum';
+import { ModuleChartContext } from '../enums/module-chart-context.enum';
 import { Module } from '../models/module.model';
 
 export const createViewChart = (

@@ -1,4 +1,4 @@
-type ConvertFn = (value: number) => void;
+type ConvertFn = (value: number) => number;
 type FormatFn = (value: number) => string;
 
 export class ModuleUnit {
@@ -6,6 +6,7 @@ export class ModuleUnit {
   private convertMap: Map<string, ConvertFn> = new Map();
 
   constructor(
+    public id: string,
     public name: string,
     public shortName?: string,
   ) {}

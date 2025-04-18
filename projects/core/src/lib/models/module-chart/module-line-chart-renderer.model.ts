@@ -11,7 +11,7 @@ import {
   SeriesLineDefaultStrategy,
   TooltipDefaultStrategy,
 } from '@healthcare/charts';
-import { ModuleChartContext } from '../../enums/module-chart-type.enum';
+import { ModuleChartContext } from '../../enums/module-chart-context.enum';
 import { createTooltipHTML } from '../../utils/create-tooltip-html.util';
 import { ModuleChartRenderer } from '../module-chart-renderer.model';
 

@@ -10,9 +10,11 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { BaseChart, ChartComponent } from '@healthcare/charts';
 import { LoaderComponent } from '@healthcare/ui';
-import { ModuleChartContext } from '../../../enums/module-chart-type.enum';
+import { ModuleChartContext } from '../../../enums/module-chart-context.enum';
+import { ModuleValueContext } from '../../../enums/module-value-context.enum';
 import { ModulePrimitive } from '../../../interfaces/module-primitive.interface';
 import { MODULE } from '../../../models/module-inject.model';
+import { ModuleStateService } from '../../../services/module-state.service';
 import { createViewChart } from '../../../utils/create-view-chart.util';
 import { ModuleDirectionComponent } from '../../module-shared/module-direction/module-direction.component';
 
@@ -26,26 +28,34 @@ import { ModuleDirectionComponent } from '../../module-shared/module-direction/m
 export class ModuleOverviewCardComponent implements OnInit {
   readonly viewType = ModuleChartContext.Overview;
 
+  private readonly moduleState = inject(ModuleStateService);
   private readonly route = inject(ActivatedRoute);
 
   readonly module = inject(MODULE);
   readonly data = signal<ModulePrimitive[][] | null>(null);
   readonly chart = signal<BaseChart | null>(null);
 
-  readonly latestRecord = computed(() => this.data()?.at(0)?.at(-1));
+  readonly dataSet = computed(() => this.data()?.at(0));
+  readonly record = computed(() =>
+    this.module.valueResolver.resolveRecord(ModuleValueContext.Overview, this.dataSet() || []),
+  );
+  readonly preferredUnit = this.moduleState.getPreferredUnit(this.module.moduleId);
+  readonly unit = this.module.valueResolver.resolveUnit(
+    ModuleValueContext.Overview,
+    this.preferredUnit,
+  );
+
   readonly value = computed(() => {
-    const value = this.latestRecord()?.value;
-    const unit = this.module.getUnit();
-    if (!unit || !value) return value;
-    return unit.format(value);
+    const data = this.record();
+    if (!data) return undefined;
+    return this.module.valueResolver.resolveValue(ModuleValueContext.Overview, data, this.unit);
   });
-  readonly unit = this.module.getUnit()?.shortName;
 
   ngOnInit() {
     const patientId = this.route.snapshot.paramMap.get('patientId');
     if (!patientId) return;
 
-    const chart = createViewChart(this.module, this.viewType);
+    const chart = createViewChart(this.module, this.viewType, this.preferredUnit);
     if (chart) this.chart.set(chart);
 
     this.module.dataSource
