@@ -26,18 +26,21 @@ export const MODULE_UNITS = {
       'kg',
       new ModuleUnit('kg', 'Kilogram', 'kg')
         .withConvertor('lb', (value: number) => value * 2.20462)
-        .withConvertor('st', (value: number) => value / 6.35029),
+        .withConvertor('st', (value: number) => value / 6.35029)
+        .withFormatter((value) => value.toFixed(2)),
     )
     .set(
       'lb',
       new ModuleUnit('lb', 'Pound', 'lb')
         .withConvertor('kg', (value: number) => value / 2.20462)
-        .withConvertor('st', (value: number) => value / 14),
+        .withConvertor('st', (value: number) => value / 14)
+        .withFormatter((value) => value.toFixed(2)),
     )
     .set(
       'st',
       new ModuleUnit('st', 'Stone', 'st')
         .withConvertor('kg', (value: number) => value * 6.35029)
-        .withConvertor('lb', (value: number) => value * 14),
+        .withConvertor('lb', (value: number) => value * 14)
+        .withFormatter((value) => value.toFixed(2)),
     ),
 };
