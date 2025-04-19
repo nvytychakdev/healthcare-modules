@@ -15,7 +15,6 @@ import { ModuleChartContext } from '../../enums/module-chart-context.enum';
 import { ModuleValueContext } from '../../enums/module-value-context.enum';
 import { createTooltipHTML } from '../../utils/create-tooltip-html.util';
 import { ModuleChartRenderer } from '../module-chart-renderer.model';
-import { getPreferredUnitDataTransformer } from '../module-data-transformers/module-data-transformers-default.model';
 import { ModuleUnit } from '../module-unit.model';
 
 export class ModuleLineChartRenderer extends ModuleChartRenderer {
@@ -27,22 +26,26 @@ export class ModuleLineChartRenderer extends ModuleChartRenderer {
     }
 
     const tooltip = this.createModuleTooltip(this.preferredUnit);
-    const transformerFn = getPreferredUnitDataTransformer(
-      ModuleValueContext.Details,
-      this.moduleRef,
-      this.preferredUnit,
+    const dataTransformers = this.moduleRef.dataSource.dataTransformers.map((transformer) =>
+      transformer(ModuleValueContext.Details, this.preferredUnit),
     );
 
     if (context === ModuleChartContext.Overview) {
-      return new ChartBuilder(new LineChartMinimalFactrory(), this.fields, tooltip, [
-        transformerFn,
-      ]).build(root);
+      return new ChartBuilder(
+        new LineChartMinimalFactrory(),
+        this.fields,
+        tooltip,
+        dataTransformers,
+      ).build(root);
     }
 
     if (context === ModuleChartContext.Details) {
-      return new ChartBuilder(new LineChartFactrory(), this.fields, tooltip, [transformerFn]).build(
-        root,
-      );
+      return new ChartBuilder(
+        new LineChartFactrory(),
+        this.fields,
+        tooltip,
+        dataTransformers,
+      ).build(root);
     }
 
     throw new Error(`Context ${context} is not implemented`);
@@ -71,15 +74,15 @@ export class ModuleLineChartRenderer extends ModuleChartRenderer {
   }
 
   private getDefaultCompositeStrategy(preferredUnit?: ModuleUnit): ChartXYValueAxisStrategy {
-    const transformer = getPreferredUnitDataTransformer(
-      ModuleValueContext.Details,
-      this.moduleRef,
-      preferredUnit,
+    const series = new SeriesLineDefaultStrategy(this.fields).withTooltipStrategy(
+      this.createModuleTooltip(preferredUnit),
     );
 
-    const series = new SeriesLineDefaultStrategy(this.fields)
-      .withTooltipStrategy(this.createModuleTooltip(preferredUnit))
-      .withDataTransformer(transformer);
+    // fill series with data transformers
+    this.moduleRef?.dataSource.dataTransformers.forEach((transformer) => {
+      const transformerFn = transformer(ModuleValueContext.Details, preferredUnit);
+      series.withDataTransformer(transformerFn);
+    });
 
     return new AxisValueDefaultStrategy([series]);
   }

@@ -8,6 +8,7 @@ import {
   ModuleLineChartRenderer,
   ModuleResolver,
 } from '@healthcare/core';
+import { PREFERRED_UNIT_DATA_TRANSFORMER_FN } from '../../../../core/src/lib/models/module-data-transformers/module-data-transformers-default.model';
 import { TemperatureListViewComponent } from './temperature-list-view/temperature-list-view.component';
 import { TemperatureOverviewComponent } from './temperature-overview/temperature-overview.component';
 import { TemperatureDataSource } from './temperature.data-source';
@@ -15,7 +16,9 @@ import { TemperatureSettings } from './temperature.settings';
 
 export const createTemperatureModule = (moduleConfig: ModuleConfig) => {
   const settings = new TemperatureSettings();
-  const dataSource = new TemperatureDataSource();
+  const dataSource = new TemperatureDataSource().withDataTransformer(
+    PREFERRED_UNIT_DATA_TRANSFORMER_FN,
+  );
   const renderer = new ModuleLineChartRenderer().withFields({
     valueYField: 'value',
     valueXField: 'createDateTime',

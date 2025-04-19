@@ -1,20 +1,13 @@
 import { ModuleValueContext } from '../../enums/module-value-context.enum';
+import { ModuleDataTransformer } from '../../interfaces/module-data.inteface';
 import { ModulePrimitive } from '../../interfaces/module-primitive.interface';
 import { ModuleUnit } from '../module-unit.model';
-import { Module } from '../module.model';
 
-type ModuleTransformerFn = (
+export const PREFERRED_UNIT_DATA_TRANSFORMER_FN: ModuleDataTransformer = function (
   context: ModuleValueContext,
-  module?: Module,
   preferredUnit?: ModuleUnit,
-) => (data: unknown[]) => ModulePrimitive[];
-
-export const getPreferredUnitDataTransformer: ModuleTransformerFn = (
-  context: ModuleValueContext,
-  module?: Module,
-  preferredUnit?: ModuleUnit,
-) => {
-  const unit = module?.valueResolver.resolveUnit(context);
+) {
+  const unit = this.moduleRef?.valueResolver.resolveUnit(context);
   return (data: unknown[]) =>
     (data as ModulePrimitive[]).map((d) => ({
       ...d,

@@ -2,6 +2,7 @@ import { ModuleChartContext } from '../enums/module-chart-context.enum';
 import { ModuleConfig } from '../interfaces/module-config.interface';
 import { ModuleLineChartRenderer } from './module-chart/module-line-chart-renderer.model';
 import { ModuleDataSource } from './module-data-source.model';
+import { PREFERRED_UNIT_DATA_TRANSFORMER_FN } from './module-data-transformers/module-data-transformers-default.model';
 import { ModuleSettings } from './module-settings.model';
 import { ModuleUnit } from './module-unit.model';
 import { ModuleValueResolver } from './module-value-resolver.model';
@@ -45,7 +46,9 @@ export class Module {
   constructor(moduleConfig: ModuleConfig) {
     this._config = moduleConfig;
     this._settings = new ModuleSettings();
-    this._dataSource = new ModuleDataSource();
+    this._dataSource = new ModuleDataSource()
+      .withModule(this)
+      .withDataTransformer(PREFERRED_UNIT_DATA_TRANSFORMER_FN);
     this._valueResolver = new ModuleValueResolver().withModule(this);
     this._view = new ModuleView()
       .withChartRenderer(ModuleChartContext.OverlayVitals, new ModuleLineChartRenderer())
@@ -59,7 +62,7 @@ export class Module {
   }
 
   withModuleDataSource(dataSource?: ModuleDataSource) {
-    if (dataSource) this._dataSource = dataSource;
+    if (dataSource) this._dataSource = dataSource.withModule(this);
     return this;
   }
 
