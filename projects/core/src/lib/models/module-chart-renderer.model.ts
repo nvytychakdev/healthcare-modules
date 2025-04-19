@@ -12,7 +12,6 @@ export abstract class ModuleChartRenderer {
   protected moduleRef?: Module;
   protected fields: ChartRenderFields = CHART_RENDER_FIELDS_DEFAULT;
   protected preferredUnit?: ModuleUnit;
-
   protected yAxesStrategy?: ChartXYValueAxisStrategy;
 
   abstract createChart(root: string, context: ModuleChartContext): BaseChart;

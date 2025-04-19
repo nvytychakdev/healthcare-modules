@@ -19,10 +19,9 @@ export class ModuleCardComponent {
   readonly isSelected = computed(() => this.module === this.moduleState.selectedModule());
 
   readonly record = this.module.valueResolver.resolveRecord(ModuleValueContext.Card, this.data);
-  readonly preferredUnit = this.moduleState.getPreferredUnit(this.module.moduleId);
-  readonly unit = this.module.valueResolver.resolveUnit(
+  readonly unit = this.module.valueResolver.resolvePreferredUnit(
     ModuleValueContext.Card,
-    this.preferredUnit,
+    this.moduleState.preferredUnits,
   );
 
   readonly value = computed(() => {

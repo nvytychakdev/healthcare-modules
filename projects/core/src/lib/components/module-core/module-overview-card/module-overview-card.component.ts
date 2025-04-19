@@ -39,10 +39,9 @@ export class ModuleOverviewCardComponent implements OnInit {
   readonly record = computed(() =>
     this.module.valueResolver.resolveRecord(ModuleValueContext.Overview, this.dataSet() || []),
   );
-  readonly preferredUnit = this.moduleState.getPreferredUnit(this.module.moduleId);
-  readonly unit = this.module.valueResolver.resolveUnit(
+  readonly unit = this.module.valueResolver.resolvePreferredUnit(
     ModuleValueContext.Overview,
-    this.preferredUnit,
+    this.moduleState.preferredUnits,
   );
 
   readonly value = computed(() => {
@@ -55,7 +54,7 @@ export class ModuleOverviewCardComponent implements OnInit {
     const patientId = this.route.snapshot.paramMap.get('patientId');
     if (!patientId) return;
 
-    const chart = createViewChart(this.module, this.viewType, this.preferredUnit);
+    const chart = createViewChart(this.module, this.viewType, this.unit);
     if (chart) this.chart.set(chart);
 
     this.module.dataSource

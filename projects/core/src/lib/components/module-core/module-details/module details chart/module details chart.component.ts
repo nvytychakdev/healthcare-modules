@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BaseChart, ChartComponent } from '@healthcare/charts';
 import { LoaderComponent } from '@healthcare/ui';
 import { ModuleChartContext } from '../../../../enums/module-chart-context.enum';
+import { ModuleValueContext } from '../../../../enums/module-value-context.enum';
 import { ModulePrimitive } from '../../../../interfaces/module-primitive.interface';
 import { MODULE } from '../../../../models/module-inject.model';
 import { Module } from '../../../../models/module.model';
@@ -34,10 +35,18 @@ export class ModuleDetailsChartComponent implements OnInit {
     const patientId = this.activatedRoute.snapshot.paramMap.get('patientId');
     if (!patientId) return;
 
-    const preferredUnit = this.moduleState.getPreferredUnit(this.module.moduleId);
+    const preferredUnit = this.module.valueResolver.resolvePreferredUnit(
+      ModuleValueContext.Details,
+      this.moduleState.preferredUnits,
+    );
     const compareModule = this.compareModule();
+
+    // draw compare chart with two modules (main and composite one)
     if (compareModule) {
-      const compositePreferredUnit = this.moduleState.getPreferredUnit(compareModule.moduleId);
+      const compositePreferredUnit = compareModule.valueResolver.resolvePreferredUnit(
+        ModuleValueContext.Details,
+        this.moduleState.preferredUnits,
+      );
       const chart = createCompositeViewChart(
         this.module,
         compareModule,
@@ -48,6 +57,7 @@ export class ModuleDetailsChartComponent implements OnInit {
       return;
     }
 
+    // draw single chart for the main module
     const chart = createViewChart(this.module, this.viewType, preferredUnit);
     if (chart) this.chart.set(chart);
   }

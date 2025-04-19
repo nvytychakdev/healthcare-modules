@@ -16,6 +16,12 @@ export type UnitResolverFn = (
   preferredUnit?: string,
 ) => ModuleUnit | undefined;
 
+export type PreferredUnitResolverFn = (
+  this: ModuleValueResolver,
+  context: ModuleValueContext,
+  preferredUnits: ReadonlyMap<string, string>,
+) => ModuleUnit | undefined;
+
 export type RecordResolverFn = (
   this: ModuleValueResolver,
   context: ModuleValueContext,

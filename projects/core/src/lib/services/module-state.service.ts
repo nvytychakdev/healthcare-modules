@@ -8,7 +8,13 @@ export class ModuleStateService {
   private readonly _selectedModule = signal<Module | undefined>(undefined);
   readonly selectedModule = this._selectedModule.asReadonly();
 
-  private readonly _units: Map<string, string> = new Map();
+  private readonly _units: Map<string, string> = new Map()
+    .set('Temperature', 'kelvin')
+    .set('Weight', 'st');
+
+  get preferredUnits(): ReadonlyMap<string, string> {
+    return this._units;
+  }
 
   selectModule(module: Module) {
     this._selectedModule.set(module);
@@ -16,9 +22,5 @@ export class ModuleStateService {
 
   setPreferredUnits(moduleId: string, preferredUnit: string) {
     this._units?.set(moduleId, preferredUnit);
-  }
-
-  getPreferredUnit(moduleId: string) {
-    return this._units?.get(moduleId);
   }
 }

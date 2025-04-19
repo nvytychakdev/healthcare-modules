@@ -1,40 +1,37 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ModuleChartContext } from '../enums/module-chart-context.enum';
-import { ModuleValueContext } from '../enums/module-value-context.enum';
+import { ModuleUnit } from '../models/module-unit.model';
 import { Module } from '../models/module.model';
 
 export const createViewChart = (
   module: Module,
   context: ModuleChartContext,
-  preferredUnit?: string,
+  preferredUnit?: ModuleUnit,
 ) => {
   const renderer = module.view.getChartRenderer(context);
-  const unit = module.valueResolver.resolveUnit(ModuleValueContext.Details, preferredUnit);
-  return renderer?.withModule(module).withPreferredUnits(unit).createChart(uuidv4(), context);
+  return renderer
+    ?.withModule(module)
+    .withPreferredUnits(preferredUnit)
+    .createChart(uuidv4(), context);
 };
 
 export const createCompositeViewChart = (
   module: Module,
   compositeModule: Module,
-  preferredUnit?: string,
-  compositePreferredUnit?: string,
+  preferredUnit?: ModuleUnit,
+  compositePreferredUnit?: ModuleUnit,
 ) => {
   // original chart
-  const unit = module.valueResolver.resolveUnit(ModuleValueContext.Details, preferredUnit);
   const renderer = module.view
     .getChartRenderer(ModuleChartContext.OverlayVitals)
     ?.withModule(module)
-    ?.withPreferredUnits(unit);
+    ?.withPreferredUnits(preferredUnit);
 
   // composite chart
   const compositeRenderer = compositeModule.view.getChartRenderer(ModuleChartContext.OverlayVitals);
-  const compositeUnit = compositeModule.valueResolver.resolveUnit(
-    ModuleValueContext.Details,
-    compositePreferredUnit,
-  );
   const compositeStrategy = compositeRenderer
     ?.withModule(compositeModule)
-    .getCompositeStrategy(compositeUnit);
+    .getCompositeStrategy(compositePreferredUnit);
 
   if (!compositeStrategy) {
     throw new Error('Invalid composite chart configuration, missing strategies');

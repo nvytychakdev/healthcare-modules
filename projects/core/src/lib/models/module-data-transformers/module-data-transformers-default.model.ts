@@ -3,7 +3,13 @@ import { ModulePrimitive } from '../../interfaces/module-primitive.interface';
 import { ModuleUnit } from '../module-unit.model';
 import { Module } from '../module.model';
 
-export const getPreferredUnitDataTransformer = (
+type ModuleTransformerFn = (
+  context: ModuleValueContext,
+  module?: Module,
+  preferredUnit?: ModuleUnit,
+) => (data: unknown[]) => ModulePrimitive[];
+
+export const getPreferredUnitDataTransformer: ModuleTransformerFn = (
   context: ModuleValueContext,
   module?: Module,
   preferredUnit?: ModuleUnit,
@@ -12,6 +18,6 @@ export const getPreferredUnitDataTransformer = (
   return (data: unknown[]) =>
     (data as ModulePrimitive[]).map((d) => ({
       ...d,
-      value: preferredUnit ? unit?.convertTo(preferredUnit.id, d.value) : d.value,
+      value: unit && preferredUnit ? unit?.convertTo(preferredUnit.id, d.value) : d.value,
     }));
 };

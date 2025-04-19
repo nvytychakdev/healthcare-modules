@@ -8,7 +8,7 @@ export const VALUE_RESOLVER_DEFAULT_FN: ValueResolverFn = function (context, dat
   // do not format value in case its missing or unit was not provided
   if (!unit || data.value === undefined) return String(data.value);
 
-  // get base formatting in case preferred unit is missing
+  // get base formatting in case preferred unit is missing or preferred matches original unit
   if (!preferredUnit || preferredUnit.id === unit.id) {
     return unit.format(data.value);
   }

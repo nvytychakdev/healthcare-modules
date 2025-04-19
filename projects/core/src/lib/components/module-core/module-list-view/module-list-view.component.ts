@@ -16,11 +16,10 @@ export class ModuleListViewComponent {
   readonly module = inject(MODULE);
   readonly data = inject(MODULE_DATA);
 
-  private readonly preferredUnit = this.moduleState.getPreferredUnit(this.module.moduleId);
   readonly record = this.module.valueResolver.resolveRecord(ModuleValueContext.List, this.data);
-  readonly unit = this.module.valueResolver.resolveUnit(
+  readonly unit = this.module.valueResolver.resolvePreferredUnit(
     ModuleValueContext.List,
-    this.preferredUnit,
+    this.moduleState.preferredUnits,
   );
   readonly value = computed(() => {
     if (!this.record) return undefined;
