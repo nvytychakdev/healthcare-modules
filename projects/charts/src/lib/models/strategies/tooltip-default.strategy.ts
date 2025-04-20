@@ -2,7 +2,7 @@ import { color, PointedRectangle, Root, Tooltip } from '@amcharts/amcharts5';
 import { ChartXYSeriesTooltipStrategy } from '../../interfaces/chart-strategy.interface';
 
 export class TooltipDefaultStrategy implements ChartXYSeriesTooltipStrategy {
-  constructor(private labelHTML: string = '{valueY}') {}
+  private _template: string = `{valueY}`;
 
   create(root: Root): Tooltip {
     const tooltip = Tooltip.new(root, {
@@ -13,7 +13,7 @@ export class TooltipDefaultStrategy implements ChartXYSeriesTooltipStrategy {
       paddingBottom: 14,
       minWidth: 40,
       minHeight: 40,
-      labelHTML: this.labelHTML,
+      labelHTML: this._template,
       autoTextColor: false,
     });
 
@@ -38,5 +38,10 @@ export class TooltipDefaultStrategy implements ChartXYSeriesTooltipStrategy {
     }
 
     return tooltip;
+  }
+
+  withTemplate(template: string): this {
+    this._template = template;
+    return this;
   }
 }

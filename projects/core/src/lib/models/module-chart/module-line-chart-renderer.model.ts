@@ -13,11 +13,17 @@ import {
 } from '@healthcare/charts';
 import { ModuleChartContext } from '../../enums/module-chart-context.enum';
 import { ModuleValueContext } from '../../enums/module-value-context.enum';
+import { ModuleChartTooltipTemplate } from '../../interfaces/module-tooltip-template.interface';
 import { createTooltipHTML } from '../../utils/create-tooltip-html.util';
 import { ModuleChartRenderer } from '../module-chart-renderer.model';
 import { ModuleUnit } from '../module-unit.model';
 
 export class ModuleLineChartRenderer extends ModuleChartRenderer {
+  private _tooltipTemplate: ModuleChartTooltipTemplate = (
+    context: ModuleChartContext,
+    unit?: ModuleUnit,
+  ) => createTooltipHTML(context, unit?.shortName);
+
   createChart(root: string, context: ModuleChartContext): BaseChart {
     if (!this.moduleRef) {
       throw new Error(
@@ -25,7 +31,7 @@ export class ModuleLineChartRenderer extends ModuleChartRenderer {
       );
     }
 
-    const tooltip = this.createModuleTooltip(this.preferredUnit);
+    const tooltip = this.createModuleTooltip(context, this.preferredUnit);
     const dataTransformers = this.moduleRef.dataSource.dataTransformers.map((transformer) =>
       transformer(ModuleValueContext.Details, this.preferredUnit),
     );
@@ -69,13 +75,18 @@ export class ModuleLineChartRenderer extends ModuleChartRenderer {
       .build(root);
   }
 
+  withTooltipTemplate(template: ModuleChartTooltipTemplate) {
+    this._tooltipTemplate = template;
+    return this;
+  }
+
   override getCompositeStrategy(preferredUnit?: ModuleUnit): ChartXYValueAxisStrategy | undefined {
     return this.yAxesStrategy || this.getDefaultCompositeStrategy(preferredUnit);
   }
 
   private getDefaultCompositeStrategy(preferredUnit?: ModuleUnit): ChartXYValueAxisStrategy {
     const series = new SeriesLineDefaultStrategy(this.fields).withTooltipStrategy(
-      this.createModuleTooltip(preferredUnit),
+      this.createModuleTooltip(ModuleChartContext.OverlayVitals, preferredUnit),
     );
 
     // fill series with data transformers
@@ -87,7 +98,10 @@ export class ModuleLineChartRenderer extends ModuleChartRenderer {
     return new AxisValueDefaultStrategy([series]);
   }
 
-  private createModuleTooltip(unit?: ModuleUnit): ChartXYSeriesTooltipStrategy {
-    return new TooltipDefaultStrategy(createTooltipHTML(unit?.shortName));
+  private createModuleTooltip(
+    context: ModuleChartContext,
+    unit?: ModuleUnit,
+  ): ChartXYSeriesTooltipStrategy {
+    return new TooltipDefaultStrategy().withTemplate(this._tooltipTemplate(context, unit));
   }
 }

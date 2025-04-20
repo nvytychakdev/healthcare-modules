@@ -12,6 +12,7 @@ export * from './lib/interfaces/module-config.interface';
 export * from './lib/interfaces/module-data.inteface';
 export * from './lib/interfaces/module-primitive.interface';
 export * from './lib/interfaces/module-resolver.interface';
+export * from './lib/interfaces/module-tooltip-template.interface';
 export * from './lib/interfaces/module-value-resolver.interface';
 
 export * from './lib/models/module-builder.model';
