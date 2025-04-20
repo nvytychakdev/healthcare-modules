@@ -9,8 +9,8 @@ export class ModuleStateService {
   readonly selectedModule = this._selectedModule.asReadonly();
 
   private readonly _units: Map<string, string> = new Map()
-    .set('Temperature', 'kelvin')
-    .set('Weight', 'st');
+    .set('Temperature', 'celsius')
+    .set('Weight', 'kg');
 
   get preferredUnits(): ReadonlyMap<string, string> {
     return this._units;

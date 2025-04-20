@@ -19,23 +19,30 @@
   </section>
 
   <section class="block border-t border-zinc-900 px-4 py-4">
-    <div
-      class="flex cursor-pointer items-center gap-4 rounded-sm p-2 transition-colors hover:bg-zinc-800/50"
-    >
-      <img
-        class="h-10 w-10 shrink-0 grow-0 overflow-hidden rounded object-cover"
-        src="https://www.thesun.co.uk/wp-content/uploads/2019/09/000102.jpg?strip=all&w=960"
-        alt="Profile picture"
-      />
+    <lib-dropdown [dropdown]="dropdown">
+      <button lib-dropdown-item (click)="openProfileSettings()">Account settings</button>
+      <button lib-dropdown-item>Sign out</button>
+    </lib-dropdown>
 
-      <div class="flex grow flex-col overflow-hidden whitespace-nowrap">
-        <span class="overflow-hidden text-sm font-semibold text-ellipsis">Ellie Bright</span>
-        <span class="overflow-hidden text-xs text-ellipsis text-zinc-400">Nurse</span>
+    <ng-template #dropdown>
+      <div
+        class="flex cursor-pointer items-center gap-4 rounded-sm p-2 transition-colors hover:bg-zinc-800/50"
+      >
+        <img
+          class="h-10 w-10 shrink-0 grow-0 overflow-hidden rounded object-cover"
+          src="https://www.thesun.co.uk/wp-content/uploads/2019/09/000102.jpg?strip=all&w=960"
+          alt="Profile picture"
+        />
+
+        <div class="flex grow flex-col overflow-hidden whitespace-nowrap">
+          <span class="overflow-hidden text-sm font-semibold text-ellipsis">Ellie Bright</span>
+          <span class="overflow-hidden text-xs text-ellipsis text-zinc-400">Nurse</span>
+        </div>
+
+        <span class="leading-0 text-zinc-400">
+          <ng-icon name="matKeyboardArrowUpOutline" size="24" />
+        </span>
       </div>
-
-      <span class="leading-0 text-zinc-400">
-        <ng-icon name="matKeyboardArrowUpOutline" size="24" />
-      </span>
-    </div>
+    </ng-template>
   </section>
 </nav>

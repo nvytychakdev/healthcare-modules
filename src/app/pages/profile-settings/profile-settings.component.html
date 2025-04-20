@@ -1,0 +1,32 @@
+<app-layout-section class="grow">
+  <div class="grid max-w-96 grid-cols-2 gap-2">
+    <span>Temperature:</span>
+    <span>
+      <select
+        [ngModel]="temperature"
+        (ngModelChange)="onTemperatureChange($event)"
+        class="min-w-24"
+        name=""
+        id=""
+      >
+        @for (unit of temperatureUnits; track $index) {
+          <option [value]="unit.value">{{ unit.label }}</option>
+        }
+      </select>
+    </span>
+    <span>Weight:</span>
+    <span>
+      <select
+        [ngModel]="weight"
+        (ngModelChange)="onWeightChange($event)"
+        class="min-w-24"
+        name=""
+        id=""
+      >
+        @for (unit of weightUnits; track $index) {
+          <option [value]="unit.value">{{ unit.label }}</option>
+        }
+      </select>
+    </span>
+  </div>
+</app-layout-section>

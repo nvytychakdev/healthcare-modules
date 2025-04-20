@@ -13,4 +13,8 @@ export class ModuleRegistryService {
   registerModule(module: Module) {
     this._modules.update((modules) => [...modules, module]);
   }
+
+  clearModules() {
+    this._modules.set([]);
+  }
 }

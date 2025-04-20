@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { DropdownComponent } from '@healthcare/ui';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import {
   matBusinessOutline,
@@ -8,11 +9,12 @@ import {
   matSettingsOutline,
   matViewColumnOutline,
 } from '@ng-icons/material-icons/outline';
+import { DropdownItemDirective } from '../../../../../projects/ui/src/lib/dropdown/dropdown-item.directive';
 import { NAVIGATION_OPTIONS } from '../../../const/navigation-options.const';
 
 @Component({
   selector: 'app-main-layout-nav',
-  imports: [RouterLink, RouterLinkActive, NgIcon],
+  imports: [RouterLink, RouterLinkActive, NgIcon, DropdownComponent, DropdownItemDirective],
   providers: [
     provideIcons({
       matHomeOutline,
@@ -28,4 +30,9 @@ import { NAVIGATION_OPTIONS } from '../../../const/navigation-options.const';
 })
 export class MainLayoutNavComponent {
   readonly navOptions = NAVIGATION_OPTIONS;
+  private readonly router = inject(Router);
+
+  openProfileSettings() {
+    void this.router.navigate(['/profile/settings']);
+  }
 }

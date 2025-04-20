@@ -8,9 +8,10 @@ export const PREFERRED_UNIT_DATA_TRANSFORMER_FN: ModuleDataTransformer = functio
   preferredUnit?: ModuleUnit,
 ) {
   const unit = this.moduleRef?.valueResolver.resolveUnit(context);
+  const hasUnit = unit && preferredUnit && unit.id !== preferredUnit.id;
   return (data: unknown[]) =>
     (data as ModulePrimitive[]).map((d) => ({
       ...d,
-      value: unit && preferredUnit ? unit?.convertTo(preferredUnit.id, d.value) : d.value,
+      value: hasUnit ? unit?.convertTo(preferredUnit.id, d.value) : d.value,
     }));
 };

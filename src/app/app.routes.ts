@@ -6,14 +6,17 @@ import { PatientLayoutComponent } from './layouts/patient-layout/patient-layout.
 import { PatientDetailsComponent } from './pages/patient-details/patient-details.component';
 import { PatientListComponent } from './pages/patient-list/patient-list.component';
 import { PatientOverviewComponent } from './pages/patient-overview/patient-overview.component';
+import { ProfileSettingsComponent } from './pages/profile-settings/profile-settings.component';
 import { moduleConfigResolver } from './resolvers/module-config.resolver';
 import { patientResolver } from './resolvers/patient.resolver';
 
 const moduleResolver: ResolveFn<void> = (route: ActivatedRouteSnapshot) => {
   const registry = inject(ModuleRegistryService);
   const moduleState = inject(ModuleStateService);
+
   const moduleId = route.paramMap.get('moduleId');
   if (!moduleId) return;
+
   const module = registry.enabledModules().find((m) => m.id === moduleId);
   if (module) moduleState.selectModule(module);
 };
@@ -54,6 +57,15 @@ export const routes: Routes = [
       {
         path: 'settings',
         component: PatientListComponent,
+      },
+    ],
+  },
+  {
+    path: 'profile',
+    children: [
+      {
+        path: 'settings',
+        component: ProfileSettingsComponent,
       },
     ],
   },

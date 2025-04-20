@@ -1,0 +1,9 @@
+@import 'tailwindcss';
+
+:host {
+  display: contents;
+}
+
+option {
+  @apply bg-zinc-950;
+}

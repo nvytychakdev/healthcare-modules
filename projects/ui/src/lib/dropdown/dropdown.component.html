@@ -1,0 +1,20 @@
+<div class="relative text-left">
+  <div (click)="openDropdown()" #trigger>
+    <ng-template [ngTemplateOutlet]="this.dropdown()"></ng-template>
+  </div>
+
+  @if (isVisible()) {
+    <div
+      #menu
+      class="absolute bottom-14 left-0 z-10 my-2 w-56 origin-bottom-left rounded-lg bg-zinc-800 px-1 shadow-lg ring-1 ring-zinc-700 focus:outline-hidden"
+      role="menu"
+      aria-orientation="vertical"
+      aria-labelledby="menu-button"
+      tabindex="-1"
+    >
+      <div class="py-1" role="none">
+        <ng-content select="[lib-dropdown-item]" />
+      </div>
+    </div>
+  }
+</div>
