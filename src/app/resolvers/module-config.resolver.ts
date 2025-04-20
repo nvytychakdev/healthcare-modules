@@ -12,6 +12,7 @@ export const moduleConfigResolver: ResolveFn<Module[]> = (route, state) => {
     return resolver.resolve(config);
   });
 
+  registry.clearModules();
   modules.forEach((module) => registry.registerModule(module));
   return modules;
 };
