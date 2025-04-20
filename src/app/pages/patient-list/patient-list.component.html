@@ -2,9 +2,9 @@
   <table class="table-clickable table w-full">
     <thead>
       <tr class="head">
-        <th class="col">Name</th>
+        <th class="col text-start">Name</th>
         @for (module of registry.modules(); track $index) {
-          <th class="col">{{ module.moduleName }}</th>
+          <th class="col text-start">{{ module.moduleName }}</th>
         }
       </tr>
     </thead>
